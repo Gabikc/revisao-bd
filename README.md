@@ -1,6 +1,6 @@
-# ENADE Quest · Revisão de Banco de Dados
+# ENADE · Revisão de Banco de Dados
 
-Site de revisão para o ENADE com um módulo por aula. Cada módulo tem **Conteúdo**, **Exemplos práticos**, **Atividades** e **Desafios** (questões autorais no estilo ENADE).
+Site simples de revisão para o ENADE - um módulo por conteúdo. Cada módulo tem **Conteúdo**, **Exemplos práticos**, **Atividades** e **Desafios**.
 
 ## Estrutura
 
