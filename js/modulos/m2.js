@@ -1,5 +1,5 @@
 MODULES.push({
-  id: 'a2', n: '2', acc: 'cor', src: 'Aula 2', short: 'Introdução a BD e SGBD',
+  id: 'a2', acc: 'cor', short: 'Introdução a BD e SGBD',
   title: 'Introdução a bancos de dados e SGBD',
   blurb: 'De arquivos soltos ao banco de dados compartilhado: o que é um BD, o que um SGBD faz, transações (ACID), integridade e quando não usar.',
   topics: [

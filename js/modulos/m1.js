@@ -1,5 +1,5 @@
 MODULES.push({
-  id: 'a1', n: '1', acc: 'vio', src: 'Aula 1', short: 'Por que estudar BD',
+  id: 'a1', acc: 'vio', short: 'Por que estudar BD',
   title: 'Apresentação e por que estudar banco de dados',
   blurb: 'Objetivos da disciplina, mapa da ementa e as ideias básicas que abrem todo o restante: dado, banco de dados e os principais tipos de SGBD.',
   topics: [
@@ -12,15 +12,15 @@ MODULES.push({
     { t: 'Ementa: o mapa do conteúdo', h:
       boxes([['Primeira metade: projetar', ul(['Introdução a bancos de dados', 'Sistemas gerenciadores de BD (SGBD)', 'Projeto de BD: conceitual, lógico e físico', 'Modelo conceitual de entidades e relacionamentos', 'Modelo de dados relacional', 'Normalização'])],
         ['Segunda metade: usar e otimizar', ul(['Álgebra relacional', 'SQL (Structured Query Language)', 'Restrições de integridade', 'Views, procedures e triggers', 'Organização física: armazenamento e indexação'])]]) +
-      tip('As Aulas 2 a 5 deste site cobrem a primeira metade e a álgebra relacional. Quando a prova pedir “projeto de BD”, pense sempre em três camadas: conceitual, lógico e físico.') },
+      tip('Os módulos 2 a 7 deste site cobrem a primeira metade (incluindo a normalização) e a álgebra relacional; os módulos 8 a 13 cobrem a linguagem SQL. Quando a prova pedir “projeto de BD”, pense sempre em três camadas: conceitual, lógico e físico.') },
     { t: 'Projeto de BD: conceitual, lógico e físico', h:
       `<p>O projeto de um banco de dados avança em três níveis, cada um com seu produto.</p>` +
       boxes([['Conceitual', 'O <b>quê</b> guardar. Independe de SGBD. Produto: diagrama entidade-relacionamento (DER).'], ['Lógico', 'Como organizar em <b>tabelas</b>. Depende do modelo (relacional): chaves, relações, integridade.'], ['Físico', 'Como <b>armazenar</b>: arquivos, índices e técnicas de acesso no SGBD escolhido.']], 'grid3') +
-      note('Este resumo por níveis vem da ementa. As Aulas 3 a 5 (prática) trabalham o nível conceitual; a Aula 5 (lógico) trabalha o lógico.') },
+      note('Este resumo por níveis vem da ementa. Os módulos 3 a 5 trabalham o nível conceitual; o módulo 6 trabalha o lógico; os módulos 8 a 13 tratam do físico e da linguagem SQL.') },
     { g: 'Como a disciplina funciona', t: 'Metodologia e avaliação', h:
       boxes([['Aulas', 'Expositivas com participação, atividades práticas em aula ou para entrega e projeto de implementação.'], ['Avaliação', 'Prova no papel, exercícios individuais e em grupo, implementação continuada com duas entregas (uma por módulo).'], ['Segunda chamada', 'Para quem ficou sem nota em um dos módulos. A nota substitui a de apenas um módulo.'], ['Aprovação', 'Média final na disciplina maior ou igual a 3,0.']]) },
     { t: 'Bibliografia principal', h:
-      ul(['ELMASRI, R.; NAVATHE, S. B. <i>Sistemas de Banco de Dados: fundamentos e aplicações.</i>', 'SILBERSCHATZ, A.; KORTH, H. F.; SUDARSHAN, S. <i>Sistemas de Bancos de Dados.</i>', 'HEUSER, Carlos Alberto. <i>Projeto de Banco de Dados.</i> (base do mapeamento E-R para relacional na Aula 5)']) },
+      ul(['ELMASRI, R.; NAVATHE, S. B. <i>Sistemas de Banco de Dados: fundamentos e aplicações.</i>', 'SILBERSCHATZ, A.; KORTH, H. F.; SUDARSHAN, S. <i>Sistemas de Bancos de Dados.</i>', 'HEUSER, Carlos Alberto. <i>Projeto de Banco de Dados.</i> (base do mapeamento E-R para relacional no módulo 6)']) },
   ],
   examples: [
     { t: 'Onde há banco de dados no seu dia?', d: 'Toque em uma situação do cotidiano para ver que dados existem por trás dela.', mount(el) {

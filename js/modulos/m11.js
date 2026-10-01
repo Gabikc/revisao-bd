@@ -28,7 +28,7 @@
   ];
 
   MODULES.push({
-    id: 'a11', n: '11', acc: 'yel', grp: 'SQL na prática', src: 'Aula 11', short: 'DQL: consultas',
+    id: 'a11', acc: 'yel', grp: 'SQL na prática', short: 'DQL: consultas',
     title: 'DQL: consultando dados com SELECT',
     blurb: 'Do SELECT básico a operadores, ordenação, funções de agregação, GROUP BY, HAVING e a primeira junção entre tabelas.',
     topics: [

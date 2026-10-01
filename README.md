@@ -12,19 +12,19 @@ js/app.js           navegação, busca e telas
 js/main.js          inicia o site
 js/gifs.js          caminhos das animações
 js/modulos/         conteúdo de cada aula
-  m1.js             Aula 1  · Apresentação
-  m2.js             Aula 2  · Introdução a BD e SGBD
-  m3.js             Aula 3  · Modelo entidade-relacionamento
-  m4.js             Aula 4  · Prática E-R (Biblioteca)
-  m5p.js            Aula 5  · Prática E-R (Locadora e Hospital)
-  m5l.js            Aula 5  · Modelo lógico e mapeamento
-  mfn.js            Normalização (dependências funcionais e formas normais)
-  m9.js             Aula 9  · Modelo físico e DDL
-  m10.js            Aula 10 · DML
-  m11.js            Aula 11 · DQL (consultas)
-  m13.js            Aula 13 · Subconsultas e funções
-  m14.js            Aula 14 · Joins externos e operações com conjuntos
-  m15.js            Aula 15 · SQL avançada (views, procedures, functions, triggers)
+  m1.js             Módulo 1  · Apresentação
+  m2.js             Módulo 2  · Introdução a BD e SGBD
+  m3.js             Módulo 3  · Modelo entidade-relacionamento
+  m4.js             Módulo 4  · Prática E-R (Biblioteca)
+  m5p.js            Módulo 5  · Prática E-R (Locadora e Hospital)
+  m5l.js            Módulo 6  · Modelo lógico e mapeamento
+  mfn.js            Módulo 7  · Normalização
+  m9.js             Módulo 8  · Modelo físico e DDL
+  m10.js            Módulo 9  · DML
+  m11.js            Módulo 10 · DQL (consultas)
+  m13.js            Módulo 11 · Subconsultas e funções
+  m14.js            Módulo 12 · Joins externos e operações com conjuntos
+  m15.js            Módulo 13 · SQL avançada (views, procedures, functions, triggers)
 assets/gifs/        animações
 ```
 

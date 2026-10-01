@@ -19,7 +19,7 @@
   const LEG = '<div class="legend"><mark class="e">entidade</mark><mark class="a">atributo</mark><mark class="r">relacionamento</mark><mark class="c">pista de identificador ou tipo de atributo</mark></div>';
 
   MODULES.push({
-    id: 'a4', n: '4', acc: 'yel', src: 'Aula 4', short: 'Prática E-R: Biblioteca',
+    id: 'a4', acc: 'yel', short: 'Prática E-R: Biblioteca',
     title: 'Prática de modelagem E-R: a Biblioteca',
     blurb: 'Como sair de um enunciado em texto até o diagrama completo, passo a passo, usando o caso da biblioteca. Inclui o roteiro de leitura e um conferidor para o seu DER.',
     topics: [

@@ -16,7 +16,7 @@
   ];
 
   MODULES.push({
-    id: 'fn', n: 'FN', acc: 'vio', grp: 'Modelagem e projeto', src: 'Aula de Normalização', short: 'Normalização',
+    id: 'fn', acc: 'vio', grp: 'Modelagem e projeto', short: 'Normalização',
     title: 'Normalização: dependências funcionais e formas normais',
     blurb: 'Como organizar as tabelas para reduzir redundância e anomalias: dependência funcional, 1FN, 2FN, 3FN, BCNF e quando vale desnormalizar.',
     topics: [

@@ -2,7 +2,7 @@
   const situacao = (n) => (n >= 70 ? 'APROVADO' : n >= 40 ? 'PROVA FINAL' : 'REPROVADO');
 
   MODULES.push({
-    id: 'a15', n: '15', acc: 'mint', grp: 'SQL na prática', src: 'Aula 15', short: 'SQL avançada',
+    id: 'a15', acc: 'mint', grp: 'SQL na prática', short: 'SQL avançada',
     title: 'SQL avançada: views, procedures, functions e triggers',
     blurb: 'Objetos que ficam guardados no banco: visões, procedimentos e funções com variáveis, condicionais e laços, e gatilhos que reagem a INSERT, UPDATE e DELETE.',
     topics: [

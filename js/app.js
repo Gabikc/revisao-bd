@@ -16,7 +16,7 @@ const dots = (m) => `<div class="dots" aria-hidden="true">${m.challenges.map((q,
 function buildShell() {
   $('#app').innerHTML = `
   <header class="top">
-    <button class="iconbtn menu-btn" id="menu" aria-label="Abrir menu dos módulos">${ic('menu')}</button>
+    <button class="iconbtn menu-btn" id="menu" aria-label="Mostrar ou ocultar o menu dos módulos">${ic('menu')}</button>
     <a class="brand" href="#/"><span class="logo">${ic('db', 18)}</span><b>Banco de Dados</b><small>Revisão por aula</small></a>
     <div class="search">${ic('search', 18)}<input id="q" type="search" placeholder="Buscar: ACID, cardinalidade, junção…" autocomplete="off" aria-label="Buscar em todos os módulos"><div class="results" id="res" role="listbox"></div></div>
     <button class="iconbtn" id="theme" aria-label="Alternar tema claro e escuro"></button>
@@ -26,7 +26,10 @@ function buildShell() {
     <nav class="side" id="side" aria-label="Módulos"></nav>
     <main id="view" tabindex="-1"></main>
   </div>`;
-  $('#menu').onclick = () => toggleSide();
+  $('#menu').onclick = () => {
+    if (matchMedia('(min-width: 960px)').matches) { const off = $('.app').classList.toggle('nosb'); store.set('eq_nosb', off); } else toggleSide();
+  };
+  if (store.get('eq_nosb', false)) $('.app').classList.add('nosb');
   $('#scrim').onclick = () => toggleSide(false);
   $('#theme').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' || (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches) ? 'light' : 'dark');
   syncThemeIcon();
@@ -73,7 +76,7 @@ function renderHome() {
     <div>
       <h1>Banco de Dados, aula por aula</h1>
       <p>${MODULES.length} módulos, um por aula. Cada um traz o conteúdo dos slides, exemplos para mexer, atividades com correção e desafios com gabarito comentado.</p>
-      <div class="btnrow"><a class="btn" href="#/${first.id}/c">${ap.ok + ap.bad ? 'Continuar de onde parei' : 'Começar pela Aula 1'}</a><a class="btn ghost" href="#/a5l/e">Ir direto ao laboratório de álgebra</a></div>
+      <div class="btnrow"><a class="btn" href="#/${first.id}/c">${ap.ok + ap.bad ? 'Continuar de onde parei' : 'Começar pelo módulo 1'}</a><a class="btn ghost" href="#/a5l/e">Ir direto ao laboratório de álgebra</a></div>
       <p style="margin:16px 0 0;font-size:.95rem">Você respondeu <b>${ap.ok + ap.bad}</b> de <b>${ap.tot}</b> desafios e acertou <b>${ap.ok}</b>.</p>
     </div>
     <div class="gifbox"><img src="${GIF.bounce}" alt="Banco de dados animado quicando"></div>
@@ -83,7 +86,7 @@ function renderHome() {
   ${groupsOf().map((g) => `<div class="mods-group">${g[0]}</div><div class="mods">${g[1].map((m) => { const p = prog(m); return `<a class="mcard" data-acc="${m.acc}" href="#/${m.id}/c"><div style="display:flex;gap:12px;align-items:center"><span class="nb lg">${m.n}</span><div><h3>${m.short}</h3><small style="color:var(--muted)">${m.src}</small></div></div><p>${m.blurb}</p><div class="stats"><span class="chip">${m.topics.length} ${plural(m.topics.length, 'c')}</span><span class="chip">${m.examples.length} ${plural(m.examples.length, 'e')}</span><span class="chip">${m.activities.length} ${plural(m.activities.length, 'a')}</span><span class="chip">${p.tot} ${plural(p.tot, 'd')}</span></div>${dots(m)}</a>`; }).join('')}</div>`).join('')}
   <h2 class="sec">Como cada módulo funciona</h2>
   <div class="how"><div><b>${ic('book', 18)} Conteúdo</b>O que cada slide ensina, em tópicos que abrem e fecham.</div><div><b>${ic('flask', 18)} Exemplos</b>Simuladores e casos resolvidos para você mexer.</div><div><b>${ic('pencil', 18)} Atividades</b>Exercícios com resposta na hora ou para conferir depois.</div><div><b>${ic('trophy', 18)} Desafios</b>Questões de múltipla escolha com gabarito comentado.</div></div>
-  <footer>Material baseado nos slides das Aulas 1 a 15 de Modelagem e Projeto de Banco de Dados.</footer>`;
+  <footer>Material baseado nos slides de Modelagem e Projeto de Banco de Dados. As questões dos desafios são autorais, escritas para esta revisão.</footer>`;
   const drawFlash = (again) => {
     if (!flashPick || again) { const pool = []; MODULES.forEach((m) => m.challenges.forEach((q, i) => pool.push([m, q, i]))); flashPick = pool[Math.floor(Math.random() * pool.length)]; }
     const [m, q, i] = flashPick;
@@ -149,6 +152,7 @@ function route() {
 }
 function boot() {
   const t = store.get('eq_theme', null); if (t) document.documentElement.dataset.theme = t;
+  MODULES.forEach((m, i) => { m.n = String(i + 1); m.src = 'Módulo ' + (i + 1); });
   buildShell(); buildIndex();
   window.addEventListener('hashchange', route);
   route();

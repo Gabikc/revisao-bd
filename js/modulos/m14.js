@@ -6,7 +6,7 @@
   const nul = (v) => (v === null ? '<span class="null">NULL</span>' : v);
 
   MODULES.push({
-    id: 'a14', n: '14', acc: 'cor', grp: 'SQL na prática', src: 'Aula 14', short: 'Joins e conjuntos',
+    id: 'a14', acc: 'cor', grp: 'SQL na prática', short: 'Joins e conjuntos',
     title: 'Joins externos e operações com conjuntos',
     blurb: 'Quando a junção comum perde linhas: LEFT, RIGHT e FULL OUTER JOIN. E como combinar resultados de consultas com UNION, UNION ALL, INTERSECT e MINUS.',
     topics: [
@@ -40,7 +40,7 @@
         sql('SELECT codigo, nome FROM funcionarios\nMINUS\nSELECT codigo, nome FROM gerentes;       -- Maria') +
         note('MINUS é a palavra do Oracle; no padrão SQL e no MySQL recente o operador equivalente é EXCEPT (e INTERSECT só existe em versões mais novas do MySQL). Confira a versão do seu SGBD.', 'Atenção') },
       { t: 'Compatibilidade entre as consultas', h:
-        `<p>Assim como na álgebra relacional (Aula 5), as consultas combinadas devem ser <b>compatíveis</b>: o mesmo número de colunas, na mesma ordem e com tipos compatíveis. Os nomes das colunas do resultado vêm da primeira consulta.</p>` },
+        `<p>Assim como na álgebra relacional (módulo 6), as consultas combinadas devem ser <b>compatíveis</b>: o mesmo número de colunas, na mesma ordem e com tipos compatíveis. Os nomes das colunas do resultado vêm da primeira consulta.</p>` },
       { g: 'Prática', t: 'Vamos praticar', h: `<p>A aula termina com prática dos joins e das operações de conjunto sobre os bancos já criados. Use os exercícios da aba <b>Atividades</b> para treinar.</p>` },
     ],
     examples: [

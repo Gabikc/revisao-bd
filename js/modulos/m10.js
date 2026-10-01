@@ -1,7 +1,7 @@
 (function () {
   const BASE = [['001', 'Pedro', '99338822'], ['002', 'Maria', '98392922'], ['003', 'João', '90020332']];
   MODULES.push({
-    id: 'a10', n: '10', acc: 'mint', grp: 'SQL na prática', src: 'Aula 10', short: 'DML',
+    id: 'a10', acc: 'mint', grp: 'SQL na prática', short: 'DML',
     title: 'DML: inserindo, atualizando e excluindo dados',
     blurb: 'Os comandos que manipulam os dados dentro das tabelas: INSERT, UPDATE e DELETE, o AUTO_INCREMENT e o cuidado com a cláusula WHERE.',
     topics: [
@@ -29,11 +29,11 @@
         sql("DELETE FROM cliente\nWHERE nome = 'Maria';") +
         `<div class="grid2">${T(['cod_cliente', 'nome', 'telefone'], BASE, { cap: 'Antes', hl: [1] })}${T(['cod_cliente', 'nome', 'telefone'], [BASE[0], BASE[2]], { cap: 'Depois' })}</div>` },
       { t: 'Cuidados ao manipular dados', h:
-        ul(['<b>WHERE esquecido</b> em UPDATE ou DELETE altera ou apaga a tabela inteira. Escreva o WHERE primeiro, ou teste a condição com um SELECT antes.', 'As restrições da Aula 9 continuam valendo: inserir PK repetida, nulo em NOT NULL ou FK inexistente é recusado.', 'Excluir uma linha que é referenciada por chave estrangeira em outra tabela é recusado pela integridade referencial.']) +
+        ul(['<b>WHERE esquecido</b> em UPDATE ou DELETE altera ou apaga a tabela inteira. Escreva o WHERE primeiro, ou teste a condição com um SELECT antes.', 'As restrições do módulo 8 continuam valendo: inserir PK repetida, nulo em NOT NULL ou FK inexistente é recusado.', 'Excluir uma linha que é referenciada por chave estrangeira em outra tabela é recusado pela integridade referencial.']) +
         note('Os três pontos são consequência direta do que o slide diz sobre WHERE e do que foi visto em DDL.', 'Complemento') },
       { g: 'Prática', t: 'Atividades propostas', h:
         ul(['Povoar o banco de dados criado na tarefa anterior: <b>5 linhas</b> em cada tabela, <b>2 updates</b> e <b>2 deletes</b> com condições diferentes.', 'Criar o BD <b>Marinha</b>; os dados a serem inseridos estão disponíveis no Classroom.']) +
-        `<p>O banco da Marinha é o mesmo usado nos exercícios de consulta da Aula 11 (marinheiros, barcos e reservas).</p>` },
+        `<p>O banco da Marinha é o mesmo usado nos exercícios de consulta do módulo 10 (marinheiros, barcos e reservas).</p>` },
     ],
     examples: [
       { t: 'Simulador de INSERT, UPDATE e DELETE', d: 'Execute comandos na tabela cliente, com e sem WHERE, e observe quantas linhas são afetadas.', mount(el) {

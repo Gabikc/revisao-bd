@@ -45,7 +45,7 @@
   const LEG = '<div class="legend"><mark class="e">entidade</mark><mark class="a">atributo</mark><mark class="r">relacionamento</mark><mark class="c">pista de cardinalidade, tipo ou generalização</mark></div>';
 
   MODULES.push({
-    id: 'a5p', n: '5a', acc: 'cor', src: 'Aula 5, parte prática', short: 'Locadora e Hospital',
+    id: 'a5p', acc: 'cor', short: 'Locadora e Hospital',
     title: 'Prática de modelagem E-R: Locadora e Hospital',
     blurb: 'Dois enunciados de dificuldade crescente. A locadora treina cardinalidades e entidades; o hospital reúne generalização, ternário e agregação no mesmo problema.',
     topics: [

@@ -2,7 +2,7 @@
   const TYPES = ['INT', 'BIGINT', 'SMALLINT', 'CHAR(3)', 'CHAR(11)', 'VARCHAR(20)', 'VARCHAR(255)', 'DECIMAL(10,2)', 'DATE', 'DATETIME'];
 
   MODULES.push({
-    id: 'a9', n: '6', acc: 'cor', grp: 'SQL na prática', src: 'Aula 9', short: 'Modelo físico e DDL',
+    id: 'a9', acc: 'cor', grp: 'SQL na prática', short: 'Modelo físico e DDL',
     title: 'Modelo físico e DDL: criando as estruturas',
     blurb: 'Do modelo lógico ao banco de verdade no SGBD: a linguagem SQL, tipos de dados, restrições de integridade e os comandos CREATE, ALTER, DROP e TRUNCATE.',
     topics: [
@@ -16,7 +16,7 @@
         `<p>Inicialmente chamada SEQUEL (Structured English Query Language), foi desenvolvida por pesquisadores da IBM durante o desenvolvimento do sistema R.</p>` +
         T(['Versão', 'Novidade'], [['SQL-86', 'Primeiro padrão ISO e ANSI (1986)'], ['SQL-89', 'Aperfeiçoamentos'], ['SQL-92 (SQL2)', 'Padrão amplamente adotado'], ['SQL-99 (SQL3)', 'Lançado em 2000: tipos de dados complexos e características de orientação a objetos'], ['SQL:2003', 'XML'], ['SQL:2008', 'Tipos espaciais, funções analíticas, segurança'], ['SQL:2011', 'Expressões temporais, JSON, OLAP'], ['SQL:2019', 'Grafos, mais JSON, arrays multidimensionais']]) },
       { t: 'As categorias da linguagem', h:
-        boxes([['DDL', 'Data Definition Language: define as estruturas (CREATE, ALTER, DROP, RENAME, TRUNCATE). É o assunto desta aula.'], ['DML', 'Data Manipulation Language: manipula os dados (INSERT, UPDATE, DELETE). Aula 10.'], ['DQL', 'Data Query Language: consulta os dados (SELECT). Aulas 11 a 14.']], 'grid3') },
+        boxes([['DDL', 'Data Definition Language: define as estruturas (CREATE, ALTER, DROP, RENAME, TRUNCATE). É o assunto deste módulo.'], ['DML', 'Data Manipulation Language: manipula os dados (INSERT, UPDATE, DELETE). Módulo 9.'], ['DQL', 'Data Query Language: consulta os dados (SELECT). Módulos 10 a 13.']], 'grid3') },
       { g: 'DDL: definindo estruturas', t: 'Tipos de dados no MySQL', h:
         T(['Tipo', 'Especificação', 'Tipo', 'Especificação'], [
           ['CHAR', 'String (0 – 255)', 'INT', 'Inteiro (−2.147.483.648 a 2.147.483.647)'], ['VARCHAR', 'String', 'BIGINT', 'Inteiro grande'], ['TINYTEXT', 'String (0 – 255)', 'FLOAT', 'Decimal (precisão de até 23 dígitos)'],

@@ -76,7 +76,7 @@
   ];
 
   MODULES.push({
-    id: 'a5l', n: '5b', acc: 'vio', src: 'Aula 5, parte lógica', short: 'Modelo lógico e mapeamento',
+    id: 'a5l', acc: 'vio', short: 'Modelo lógico e mapeamento',
     title: 'Modelo lógico: relacional, álgebra e mapeamento do E-R',
     blurb: 'Do diagrama para as tabelas. Chaves e integridade, os operadores da álgebra relacional e as regras para transformar cada construção do modelo E-R em relações.',
     topics: [
@@ -216,7 +216,7 @@
         ['Nome e valor das notas de pelo menos R$ 200.', '<div class="expr">π <sub>nome, valor</sub> (σ <sub>valor ≥ 200</sub> (Clientes ⋈ <sub>Id = Id_cliente</sub> NotaFiscal))</div>'],
         ['Ids dos clientes que não têm nota fiscal.', '<div class="expr">π <sub>Id</sub> (Clientes) − π <sub>Id_cliente</sub> (NotaFiscal)</div><p>Diferença entre os ids de todos os clientes e os ids que aparecem em notas.</p>'],
       ] },
-      { t: 'Mapeie a vídeo locadora', d: 'Use o DER da Aula 5 (prática) e escreva as tabelas. Depois abra o gabarito.', kind: 'qa', items: [
+      { t: 'Mapeie a vídeo locadora', d: 'Use o DER do módulo 5 e escreva as tabelas. Depois abra o gabarito.', kind: 'qa', items: [
         ['Gabarito: tabelas da locadora', sch('Cliente', ['*cpf', 'nome', 'rg', 'rua', 'numero', 'bairro']) + sch('Telefone_Cliente', ['*^cpf', '*telefone'], ['cpf referencia Cliente (multivalorado)']) + sch('Filme', ['*cod', 'nome', 'duracao']) + sch('Genero', ['*cod', 'descricao']) + sch('Filme_Genero', ['*^cod_filme', '*^cod_genero']) + sch('Copia', ['*cod', '^cod_filme'], ['cod_filme referencia Filme, NOT NULL (1:N)']) + sch('Emprestimo', ['*cod', 'data_emprestimo', 'data_devolucao', 'valor', '^cpf'], ['cpf referencia Cliente, NOT NULL']) + sch('Item_Emprestimo', ['*^cod_emprestimo', '*^cod_copia']) + sch('Reserva', ['*cod', 'data_reserva', 'data_prevista', 'situacao', '^cpf'], ['cpf referencia Cliente, NOT NULL']) + sch('Item_Reserva', ['*^cod_reserva', '*^cod_copia']) + '<p>“Quantidade” de Filme foi omitida por poder ser derivada da contagem de cópias; se for mantida, vira uma coluna de Filme.</p>'],
       ] },
       { t: 'Leitura: o artigo de Codd', d: 'Leitura complementar sugerida em aula.', kind: 'html', html:

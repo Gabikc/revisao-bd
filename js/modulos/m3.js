@@ -36,7 +36,7 @@
   const dParcial = dGen('p', 'Funcionário', 'Secretária', 'Motorista', []);
 
   MODULES.push({
-    id: 'a3', n: '3', acc: 'mint', src: 'Aula 3', short: 'Modelo entidade-relacionamento',
+    id: 'a3', acc: 'mint', short: 'Modelo entidade-relacionamento',
     title: 'Modelagem conceitual: modelo entidade-relacionamento',
     blurb: 'Entidades, atributos, relacionamentos e cardinalidades, mais os casos especiais que sempre aparecem em prova: auto-relacionamento, ternário, generalização, entidade fraca e agregação.',
     topics: [

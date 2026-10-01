@@ -28,7 +28,7 @@
   ];
 
   MODULES.push({
-    id: 'a13', n: '13', acc: 'vio', grp: 'SQL na prática', src: 'Aula 13', short: 'Subconsultas e funções',
+    id: 'a13', acc: 'vio', grp: 'SQL na prática', short: 'Subconsultas e funções',
     title: 'Subconsultas e funções do SQL',
     blurb: 'Consultas dentro de consultas: IN, ANY, ALL, EXISTS e subconsultas correlacionadas, mais as funções numéricas, de texto e de data.',
     topics: [
