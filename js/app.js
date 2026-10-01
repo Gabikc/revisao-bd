@@ -83,7 +83,7 @@ function renderHome() {
   ${groupsOf().map((g) => `<div class="mods-group">${g[0]}</div><div class="mods">${g[1].map((m) => { const p = prog(m); return `<a class="mcard" data-acc="${m.acc}" href="#/${m.id}/c"><div style="display:flex;gap:12px;align-items:center"><span class="nb lg">${m.n}</span><div><h3>${m.short}</h3><small style="color:var(--muted)">${m.src}</small></div></div><p>${m.blurb}</p><div class="stats"><span class="chip">${m.topics.length} ${plural(m.topics.length, 'c')}</span><span class="chip">${m.examples.length} ${plural(m.examples.length, 'e')}</span><span class="chip">${m.activities.length} ${plural(m.activities.length, 'a')}</span><span class="chip">${p.tot} ${plural(p.tot, 'd')}</span></div>${dots(m)}</a>`; }).join('')}</div>`).join('')}
   <h2 class="sec">Como cada módulo funciona</h2>
   <div class="how"><div><b>${ic('book', 18)} Conteúdo</b>O que cada slide ensina, em tópicos que abrem e fecham.</div><div><b>${ic('flask', 18)} Exemplos</b>Simuladores e casos resolvidos para você mexer.</div><div><b>${ic('pencil', 18)} Atividades</b>Exercícios com resposta na hora ou para conferir depois.</div><div><b>${ic('trophy', 18)} Desafios</b>Questões de múltipla escolha com gabarito comentado.</div></div>
-  <footer>Material baseado nos slides das Aulas 1 a 5 de Modelagem e Projeto de Banco de Dados. As questões dos desafios são autorais, escritas para esta revisão.</footer>`;
+  <footer>Material baseado nos slides das Aulas 1 a 15 de Modelagem e Projeto de Banco de Dados.</footer>`;
   const drawFlash = (again) => {
     if (!flashPick || again) { const pool = []; MODULES.forEach((m) => m.challenges.forEach((q, i) => pool.push([m, q, i]))); flashPick = pool[Math.floor(Math.random() * pool.length)]; }
     const [m, q, i] = flashPick;
