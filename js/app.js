@@ -1,4 +1,5 @@
 const TABS = [['c', 'Conteúdo', 'book', 'topics'], ['e', 'Exemplos', 'flask', 'examples'], ['a', 'Atividades', 'pencil', 'activities'], ['d', 'Desafios', 'trophy', 'challenges']];
+const groupsOf = () => { const g = []; MODULES.forEach((m) => { const k = m.grp || 'Modelagem e projeto'; let e = g.find((x) => x[0] === k); if (!e) g.push(e = [k, []]); e[1].push(m); }); return g; };
 const mod = (id) => MODULES.find((m) => m.id === id);
 const qid = (m, i) => m.id + '-d' + i;
 const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -16,7 +17,7 @@ function buildShell() {
   $('#app').innerHTML = `
   <header class="top">
     <button class="iconbtn menu-btn" id="menu" aria-label="Abrir menu dos módulos">${ic('menu')}</button>
-    <a class="brand" href="#/">${ic('db', 26)}<b>ENADE Quest</b><small>Banco de Dados</small></a>
+    <a class="brand" href="#/"><span class="logo">${ic('db', 18)}</span><b>Banco de Dados</b><small>Revisão por aula</small></a>
     <div class="search">${ic('search', 18)}<input id="q" type="search" placeholder="Buscar: ACID, cardinalidade, junção…" autocomplete="off" aria-label="Buscar em todos os módulos"><div class="results" id="res" role="listbox"></div></div>
     <button class="iconbtn" id="theme" aria-label="Alternar tema claro e escuro"></button>
   </header>
@@ -46,7 +47,7 @@ function setTheme(t) { document.documentElement.dataset.theme = t; store.set('eq
 function syncThemeIcon() { const dark = document.documentElement.dataset.theme === 'dark' || (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches); $('#theme').innerHTML = ic(dark ? 'sun' : 'moon'); }
 function buildSide() {
   const cur = (location.hash.split('/')[1] || '');
-  $('#side').innerHTML = `<a class="homelink" href="#/">${ic('home')} Início</a><h2>Trilha de aulas</h2><ol class="trail">${MODULES.map((m) => `<li data-acc="${m.acc}"><a href="#/${m.id}/c" ${cur === m.id ? 'aria-current="page"' : ''}><span class="nb">${m.n}</span><span class="nm">${m.short}<small>${m.src}</small>${dots(m)}</span></a></li>`).join('')}</ol>`;
+  $('#side').innerHTML = `<a class="homelink" href="#/">${ic('home')} Início</a>${groupsOf().map((g) => `<h2>${g[0]}</h2><ol class="trail">${g[1].map((m) => `<li data-acc="${m.acc}"><a href="#/${m.id}/c" ${cur === m.id ? 'aria-current="page"' : ''}><span class="nb">${m.n}</span><span class="nm">${m.short}<small>${m.src}</small>${dots(m)}</span></a></li>`).join('')}</ol>`).join('')}`;
   $$('#side a').forEach((a) => a.addEventListener('click', () => toggleSide(false)));
 }
 
@@ -64,14 +65,14 @@ function buildIndex() {
 /* ---------- home ---------- */
 let flashPick = null;
 function renderHome() {
-  document.title = 'ENADE Quest · Revisão de Banco de Dados';
+  document.title = 'Banco de Dados · Revisão por aula';
   const ap = allProg();
   const first = MODULES.find((m) => prog(m).ok + prog(m).bad < prog(m).tot) || MODULES[0];
   $('#view').innerHTML = `
   <section class="hero">
     <div>
-      <h1>Revise Banco de Dados para o ENADE, uma aula por vez</h1>
-      <p>Seis módulos, um por aula. Cada um traz o conteúdo dos slides, exemplos que você pode mexer, atividades com correção e desafios no formato de prova.</p>
+      <h1>Banco de Dados, aula por aula</h1>
+      <p>${MODULES.length} módulos, um por aula. Cada um traz o conteúdo dos slides, exemplos para mexer, atividades com correção e desafios com gabarito comentado.</p>
       <div class="btnrow"><a class="btn" href="#/${first.id}/c">${ap.ok + ap.bad ? 'Continuar de onde parei' : 'Começar pela Aula 1'}</a><a class="btn ghost" href="#/a5l/e">Ir direto ao laboratório de álgebra</a></div>
       <p style="margin:16px 0 0;font-size:.95rem">Você respondeu <b>${ap.ok + ap.bad}</b> de <b>${ap.tot}</b> desafios e acertou <b>${ap.ok}</b>.</p>
     </div>
@@ -79,9 +80,9 @@ function renderHome() {
   </section>
   <section class="flash" aria-labelledby="fl"><h2 id="fl">${ic('bolt')} Questão relâmpago</h2><div id="flq"></div><div style="margin:0 0 6px"><button class="smallbtn" id="fln">Sortear outra questão</button></div></section>
   <h2 class="sec">Módulos</h2>
-  <div class="mods">${MODULES.map((m) => { const p = prog(m); return `<a class="mcard" data-acc="${m.acc}" href="#/${m.id}/c"><div style="display:flex;gap:12px;align-items:center"><span class="nb lg">${m.n}</span><div><h3>${m.short}</h3><small style="color:var(--muted)">${m.src}</small></div></div><p>${m.blurb}</p><div class="stats"><span class="chip">${m.topics.length} tópicos</span><span class="chip">${m.examples.length} exemplos</span><span class="chip">${m.activities.length} atividades</span><span class="chip">${p.tot} desafios</span></div>${dots(m)}</a>`; }).join('')}</div>
+  ${groupsOf().map((g) => `<div class="mods-group">${g[0]}</div><div class="mods">${g[1].map((m) => { const p = prog(m); return `<a class="mcard" data-acc="${m.acc}" href="#/${m.id}/c"><div style="display:flex;gap:12px;align-items:center"><span class="nb lg">${m.n}</span><div><h3>${m.short}</h3><small style="color:var(--muted)">${m.src}</small></div></div><p>${m.blurb}</p><div class="stats"><span class="chip">${m.topics.length} ${plural(m.topics.length, 'c')}</span><span class="chip">${m.examples.length} ${plural(m.examples.length, 'e')}</span><span class="chip">${m.activities.length} ${plural(m.activities.length, 'a')}</span><span class="chip">${p.tot} ${plural(p.tot, 'd')}</span></div>${dots(m)}</a>`; }).join('')}</div>`).join('')}
   <h2 class="sec">Como cada módulo funciona</h2>
-  <div class="how"><div><b>${ic('book', 18)} Conteúdo</b>O que cada slide ensina, em tópicos que abrem e fecham.</div><div><b>${ic('flask', 18)} Exemplos</b>Simuladores e casos resolvidos para você mexer.</div><div><b>${ic('pencil', 18)} Atividades</b>Exercícios com resposta na hora ou para conferir depois.</div><div><b>${ic('trophy', 18)} Desafios</b>Questões no estilo ENADE com gabarito comentado.</div></div>
+  <div class="how"><div><b>${ic('book', 18)} Conteúdo</b>O que cada slide ensina, em tópicos que abrem e fecham.</div><div><b>${ic('flask', 18)} Exemplos</b>Simuladores e casos resolvidos para você mexer.</div><div><b>${ic('pencil', 18)} Atividades</b>Exercícios com resposta na hora ou para conferir depois.</div><div><b>${ic('trophy', 18)} Desafios</b>Questões de múltipla escolha com gabarito comentado.</div></div>
   <footer>Material baseado nos slides das Aulas 1 a 5 de Modelagem e Projeto de Banco de Dados. As questões dos desafios são autorais, escritas para esta revisão.</footer>`;
   const drawFlash = (again) => {
     if (!flashPick || again) { const pool = []; MODULES.forEach((m) => m.challenges.forEach((q, i) => pool.push([m, q, i]))); flashPick = pool[Math.floor(Math.random() * pool.length)]; }
@@ -95,7 +96,7 @@ function renderHome() {
 
 /* ---------- módulo ---------- */
 function renderModule(m, tab, idx) {
-  document.title = `${m.src} · ${m.short} · ENADE Quest`;
+  document.title = `${m.src} · ${m.short} · Banco de Dados`;
   const tabDef = TABS.find((t) => t[0] === tab) || TABS[0];
   const idxNum = idx == null ? null : +idx;
   const k = MODULES.indexOf(m), prev = MODULES[k - 1], next = MODULES[k + 1];

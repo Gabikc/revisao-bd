@@ -29,7 +29,7 @@ const ICONS = {
 const ic = (n, s = 20) => `<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n]}</svg>`;
 
 /* ---------- blocos de conteúdo ---------- */
-const tip = (t, l = 'Cai no ENADE') => `<div class="callout"><b>${l}</b><div>${t}</div></div>`;
+const tip = (t, l = 'Dica de prova') => `<div class="callout"><b>${l}</b><div>${t}</div></div>`;
 const trap = (t, l = 'Pegadinha') => `<div class="callout trap"><b>${l}</b><div>${t}</div></div>`;
 const note = (t, l = 'Anotação') => `<div class="callout note"><b>${l}</b><div>${t}</div></div>`;
 const boxes = (arr, cls = 'grid2') => `<div class="${cls}">${arr.map((b) => `<div class="box"><b class="h">${b[0]}</b><p>${b[1]}</p></div>`).join('')}</div>`;
@@ -37,7 +37,7 @@ const ul = (a) => `<ul>${a.map((x) => `<li>${x}</li>`).join('')}</ul>`;
 const ol = (a) => `<ol>${a.map((x) => `<li>${x}</li>`).join('')}</ol>`;
 function T(headers, rows, o = {}) {
   const hl = o.hl || [], dim = o.dim || [];
-  return (o.cap ? `<div class="tbl-cap">${o.cap}</div>` : '') + `<div class="tblwrap"><table><thead><tr>${headers.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map((r, i) => `<tr class="${hl.includes(i) ? 'hl' : ''} ${dim.includes(i) ? 'dim' : ''}">${r.map((c) => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  return (o.cap ? `<div class="tbl-block"><div class="tbl-cap">${o.cap}</div>` : '') + `<div class="tblwrap"><table><thead><tr>${headers.map((h) => `<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map((r, i) => `<tr class="${hl.includes(i) ? 'hl' : ''} ${dim.includes(i) ? 'dim' : ''}">${r.map((c) => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>` + (o.cap ? '</div>' : '');
 }
 const code = (s) => `<pre class="code">${s}</pre>`;
 /* esquema relacional: '*col' = PK, '^col' = FK */
@@ -45,6 +45,21 @@ function sch(name, cols, refs = []) {
   const c = cols.map((x) => (x.startsWith('*^') ? `<u class="fk">${x.slice(2)}</u>` : x[0] === '*' ? `<u>${x.slice(1)}</u>` : x[0] === '^' ? `<span class="fk">${x.slice(1)}</span>` : x)).join(', ');
   return `<div class="sch"><div class="l">${name}(${c})</div>${refs.map((r) => `<div class="r">${r}</div>`).join('')}</div>`;
 }
+
+/* ---------- bloco de código SQL com realce ---------- */
+const SQL_KW = ['create database','create schema','create table','create or replace view','create view','create procedure','create function','create trigger','drop table','drop view','drop procedure','drop function','drop trigger','drop column','alter table','alter view','truncate table','insert into','delete from','group by','order by','primary key','foreign key','not null','is not null','is null','union all','inner join','left join','right join','full outer join','full join','left outer join','right outer join','cross join','for each row','end if','end case','end loop','end while','end repeat','with check option','not exists','not between','not like','not in','delimiter','select','from','where','having','distinct','and','or','not','in','between','like','as','values','update','set','references','unique','check','default','constraint','join','on','union','intersect','minus','except','exists','any','some','all','limit','asc','desc','count','sum','avg','min','max','add','modify','rename','column','to','returns','return','begin','end','declare','if','then','else','elseif','while','do','loop','repeat','until','leave','iterate','call','trigger','before','after','insert','delete','case','when','auto_increment','signal','sqlstate','message_text','into','null','with','view','procedure','function','deterministic','temporary','true','false','in','out','inout'];
+const SQL_RE = new RegExp('(--[^\\n]*)|(\'(?:[^\'\\\\]|\'\')*\')|\\b(' + SQL_KW.slice().sort((a, b) => b.length - a.length).map((k) => k.replace(/ /g, '\\s+')).join('|') + ')\\b', 'gi');
+function sql(src) {
+  let out = '', last = 0, m;
+  SQL_RE.lastIndex = 0;
+  while ((m = SQL_RE.exec(src))) {
+    out += esc(src.slice(last, m.index));
+    out += m[1] ? `<span class="cm">${esc(m[1])}</span>` : m[2] ? `<span class="st">${esc(m[2])}</span>` : `<span class="kw">${esc(m[3])}</span>`;
+    last = SQL_RE.lastIndex;
+  }
+  return `<pre class="code">${out + esc(src.slice(last))}</pre>`;
+}
+
 const flow = (a) => `<div class="flow">${a.map((x, i) => (i ? '<span class="ar">' + ic('right', 16) + '</span>' : '') + `<span class="n">${x}</span>`).join('')}</div>`;
 const qa = (q, a) => `<details class="qa"><summary><span>${q}</span>${ic('chev', 18)}</summary><div class="qa-a">${a}</div></details>`;
 
