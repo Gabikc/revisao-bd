@@ -2,7 +2,7 @@
   const TYPES = ['INT', 'BIGINT', 'SMALLINT', 'CHAR(3)', 'CHAR(11)', 'VARCHAR(20)', 'VARCHAR(255)', 'DECIMAL(10,2)', 'DATE', 'DATETIME'];
 
   MODULES.push({
-    id: 'a9', n: '9', acc: 'cor', grp: 'SQL na prática', src: 'Aula 9', short: 'Modelo físico e DDL',
+    id: 'a9', n: '6', acc: 'cor', grp: 'SQL na prática', src: 'Aula 9', short: 'Modelo físico e DDL',
     title: 'Modelo físico e DDL: criando as estruturas',
     blurb: 'Do modelo lógico ao banco de verdade no SGBD: a linguagem SQL, tipos de dados, restrições de integridade e os comandos CREATE, ALTER, DROP e TRUNCATE.',
     topics: [
