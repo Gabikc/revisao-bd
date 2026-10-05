@@ -11,15 +11,15 @@
     { id: 'P', t: 'e', l: 'Professor', x: 100, y: 60 }, { id: 'D', t: 'e', l: 'Disciplina', x: 500, y: 60 }, { id: 'A', t: 'e', l: 'Aluno', x: 300, y: 200 }, { id: 'R', t: 'r', l: 'ministra', x: 300, y: 92 },
   ], edges: [['P', 'R', '(1,N)'], ['D', 'R', '(1,N)'], ['A', 'R', '(1,N)']] });
   const dAutoG = er({ w: 600, h: 215, alt: 'Auto-relacionamento gerencia', nodes: [
-    { id: 'F', t: 'e', l: 'Funcionário', x: 300, y: 170 }, { id: 'R', t: 'r', l: 'gerencia', x: 300, y: 62 }, { id: 'c1', t: 'cap', l: 'gerente', x: 120, y: 50 }, { id: 'c2', t: 'cap', l: 'gerenciado', x: 480, y: 50 },
-  ], edges: [['F', 'R', '(0,N)', '', { via: [175, 62] }], ['F', 'R', '(0,1)', '', { via: [425, 62] }]] });
+    { id: 'F', t: 'e', l: 'Funcionário', x: 300, y: 170 }, { id: 'R', t: 'r', l: 'gerencia', x: 300, y: 62 }, { id: 'c1', t: 'cap', l: 'é gerente', x: 120, y: 50 }, { id: 'c2', t: 'cap', l: 'são gerenciados', x: 480, y: 50 },
+  ], edges: [['F', 'R', '(0,1)', '', { via: [175, 62] }], ['F', 'R', '(0,N)', '', { via: [425, 62] }]] });
   const dAutoN = er({ w: 600, h: 215, alt: 'Auto-relacionamento compõe', nodes: [
     { id: 'F', t: 'e', l: 'Produto', x: 300, y: 170 }, { id: 'R', t: 'r', l: 'compõe', x: 300, y: 62 }, { id: 'c1', t: 'cap', l: 'composto', x: 120, y: 50 }, { id: 'c2', t: 'cap', l: 'componente', x: 480, y: 50 },
   ], edges: [['F', 'R', '(0,N)', '', { via: [175, 62] }], ['F', 'R', '(0,N)', '', { via: [425, 62] }]] });
   const dFr = er({ w: 600, h: 180, alt: 'Entidade fraca', nodes: [
     { id: 'E', t: 'e', l: 'Empregado', x: 110, y: 66 }, { id: 'R', t: 'r', l: 'possui', x: 300, y: 66 }, { id: 'D', t: 'w', l: 'Dependente', x: 490, y: 66 },
     { id: 'a', t: 'a', l: 'matrícula', k: 1, x: 110, y: 145 }, { id: 'b', t: 'a', l: 'nome', p: 1, x: 490, y: 145 },
-  ], edges: [['E', 'R', '(0,N)'], ['R', 'D', '', '(1,1)'], ['E', 'a'], ['D', 'b']] });
+  ], edges: [['E', 'R', '(1,1)'], ['R', 'D', '', '(0,N)'], ['E', 'a'], ['D', 'b']] });
   const dGen = er({ w: 600, h: 200, alt: 'Generalização de cliente', nodes: [
     { id: 'S', t: 'e', l: 'Cliente', x: 300, y: 36 }, { id: 'G', t: 'g', l: 't', x: 300, y: 100 }, { id: 'A', t: 'e', l: 'Pessoa física', x: 170, y: 165 }, { id: 'B', t: 'e', l: 'Pessoa jurídica', x: 430, y: 165 },
   ], edges: [['S', 'G'], ['G', 'A'], ['G', 'B']] });
@@ -27,31 +27,31 @@
     { id: 'BOX', t: 'box', l: 'Consulta (agregação)', x: 300, y: 78, w: 570, h: 112 },
     { id: 'M', t: 'e', l: 'Médico', x: 110, y: 90 }, { id: 'C', t: 'r', l: 'Consulta', x: 300, y: 90 }, { id: 'P', t: 'e', l: 'Paciente', x: 490, y: 90 },
     { id: 'E', t: 'r', l: 'Emite', x: 300, y: 215 }, { id: 'RC', t: 'e', l: 'Receita', x: 300, y: 295 },
-  ], edges: [['M', 'C', '(0,N)'], ['C', 'P', '', '(0,N)'], ['E', 'BOX', '', '(0,N)'], ['RC', 'E', '(1,1)']] });
+  ], edges: [['M', 'C', '(1,N)'], ['C', 'P', '', '(0,N)'], ['E', 'BOX', '', '(1,1)'], ['RC', 'E', '(0,N)']] });
   const dMult = er({ w: 600, h: 150, alt: 'Pessoa com telefone multivalorado', nodes: [
     { id: 'P', t: 'e', l: 'Pessoa', x: 300, y: 100 }, { id: 'a', t: 'a', l: 'cpf', k: 1, x: 200, y: 32 }, { id: 'b', t: 'a', l: 'nome', x: 300, y: 28 }, { id: 'c', t: 'a', l: 'telefone', m: 1, x: 410, y: 32 },
   ], edges: [['P', 'a'], ['P', 'b'], ['P', 'c']] });
 
   /* ---- casos do conversor ---- */
   const CASES = [
-    { t: 'N:N (Nota fiscal × Produto)', er: bin('Nota fiscal', 'Produto', 'contém', '(1,N)', '(1,N)', { aR: ['quantidade'] }),
+    { t: 'N:N (Nota fiscal × Produto)', er: bin('Nota fiscal', 'Produto', 'contém', '(0,N)', '(1,N)', { aR: ['quantidade'] }),
       rule: 'Relacionamento N:N vira uma <b>tabela própria</b>. Sua chave primária é composta pelas chaves das duas entidades (cada uma também é FK). Atributos do relacionamento entram nessa tabela.',
       sch: [sch('NotaFiscal', ['*num', 'data']), sch('Produto', ['*cod', 'descricao']), sch('Contem', ['*^num_nota', '*^cod_prod', 'quantidade'], ['num_nota referencia NotaFiscal', 'cod_prod referencia Produto'])] },
-    { t: '1:N obrigatório (Escola (1,N) × Aluno (1,1))', er: bin('Escola', 'Aluno', 'estuda', '(1,N)', '(1,1)'),
-      rule: 'A <b>chave estrangeira vai para a tabela do lado N</b> (a entidade cujo máximo é 1 no relacionamento), que aponta para o lado 1. Como Aluno tem (1,1), a FK é obrigatória (NOT NULL).',
+    { t: '1:N obrigatório (Escola (1,1) × Aluno (1,N))', er: bin('Escola', 'Aluno', 'estuda', '(1,1)', '(1,N)'),
+      rule: 'A <b>chave estrangeira vai para a tabela do lado N</b> (aquela ao lado da qual está o N: Aluno), que aponta para o lado 1. Como cada aluno tem exatamente uma escola, o par ao lado de Escola é (1,1) e a FK é obrigatória (NOT NULL).',
       sch: [sch('Escola', ['*cod', 'nome']), sch('Aluno', ['*matricula', 'nome', '^cod_escola'], ['cod_escola referencia Escola, NOT NULL'])] },
-    { t: '1:N opcional (Empresa (0,N) × Funcionário (0,1))', er: bin('Empresa', 'Funcionário', 'emprega', '(0,N)', '(0,1)'),
-      rule: 'Mesma regra: FK no lado N. Como a participação do funcionário é opcional (0,1), a FK <b>pode ser nula</b>.',
+    { t: '1:N opcional (Empresa (0,1) × Funcionário (0,N))', er: bin('Empresa', 'Funcionário', 'emprega', '(0,1)', '(0,N)'),
+      rule: 'Mesma regra: FK no lado N (Funcionário). Como o par ao lado de Empresa é (0,1), um funcionário pode não ter empresa, e a FK <b>pode ser nula</b>.',
       sch: [sch('Empresa', ['*cnpj', 'nome']), sch('Funcionario', ['*matr', 'nome', '^cnpj_empresa'], ['cnpj_empresa referencia Empresa, aceita nulo'])] },
     { t: '1:1 opcional dos dois lados (0,1) × (0,1)', er: bin('Funcionário', 'Computador', 'usa', '(0,1)', '(0,1)'),
       rule: 'Há três soluções: FK em uma das tabelas, FK na outra, ou <b>tabela própria</b> para o relacionamento. Com poucos casos de associação, a tabela própria evita muitos valores nulos. As chaves na tabela do relacionamento são únicas.',
       sch: [sch('Funcionario', ['*matr', 'nome']), sch('Computador', ['*patrimonio', 'modelo']), sch('Usa', ['*^matr', '^patrimonio'], ['matr referencia Funcionario', 'patrimonio referencia Computador, único'])] },
-    { t: '1:1 com um lado obrigatório (0,1) × (1,1)', er: bin('Pessoa', 'Certidão', 'possui', '(0,1)', '(1,1)'),
-      rule: 'A <b>FK vai para a tabela da entidade com participação obrigatória</b> (1,1), assim nunca é nula. Ela deve ser única (é um 1:1).',
-      sch: [sch('Pessoa', ['*cpf', 'nome']), sch('Certidao', ['*numero', 'data', '^cpf_pessoa'], ['cpf_pessoa referencia Pessoa, único e NOT NULL'])] },
-    { t: '1:1 obrigatório dos dois lados (1,1) × (1,1)', er: bin('Funcionário', 'Cartão de acesso', 'recebe', '(1,1)', '(1,1)'),
+    { t: '1:1 com um lado obrigatório (1,1) × (0,1)', er: bin('Funcionário', 'Cartão de acesso', 'recebe', '(1,1)', '(0,1)'),
+      rule: 'A <b>PK da tabela com (1,1) ao lado vira FK na outra tabela</b> (a que tem (0,1) ao lado). Aqui, todo cartão pertence a exatamente um funcionário (o (1,1) está ao lado de Funcionário), então a PK de Funcionário vira FK em Cartao_Acesso e nunca é nula. Ela deve ser única (é um 1:1). A outra opção do slide é fundir as duas tabelas.',
+      sch: [sch('Funcionario', ['*matricula', 'nome', 'dt_nasc']), sch('Cartao_Acesso', ['*codigo', 'validade', '^matricula'], ['matricula referencia Funcionario, único e NOT NULL'])] },
+    { t: '1:1 obrigatório dos dois lados (1,1) × (1,1)', er: bin('Pessoa', 'Certidão', 'recebe', '(1,1)', '(1,1)'),
       rule: 'Solução mais comum: <b>fundir</b> as duas entidades em uma só tabela, pois uma não existe sem a outra.',
-      sch: [sch('Funcionario', ['*matr', 'nome', 'num_cartao', 'data_emissao_cartao'])] },
+      sch: [sch('Pessoa', ['*cpf', 'nome', 'dt_nasc', 'cod_certidao', 'data_certidao'])] },
     { t: 'Entidade fraca (Empregado × Dependente)', er: dFr,
       rule: 'A tabela da fraca recebe a chave da forte como FK, e sua <b>chave primária é composta</b>: chave da forte + discriminador.',
       sch: [sch('Empregado', ['*matricula', 'nome']), sch('Dependente', ['*^matricula', '*nome', 'dt_nascimento'], ['matricula referencia Empregado'])] },
@@ -126,9 +126,9 @@
         ul(['Cada <b>entidade</b> vira uma tabela.', 'Cada <b>atributo</b> vira uma coluna.', 'O <b>identificador</b> vira a chave primária.', 'Atributo composto: uma coluna para cada parte (rua, número, bairro).', 'Atributo derivado: em geral não é guardado (calculado na consulta).']) + sch('Cliente', ['*cpf', 'nome', 'rua', 'numero', 'bairro']) },
       { t: 'Atributo multivalorado', h: `<p>Duas soluções:</p>` + ol(['<b>Tabela separada</b> com a chave da entidade + o valor. Chave primária composta. Aceita qualquer quantidade de valores.', '<b>Colunas repetidas</b> (telefone1, telefone2) na própria tabela: só se o máximo de valores for pequeno e conhecido.']) + sch('Pessoa', ['*cpf', 'nome']) + sch('Telefone', ['*^cpf', '*numero'], ['cpf referencia Pessoa']) },
       { t: 'Relacionamentos N:N', h: `<p>Sempre viram <b>tabela própria</b>. Chave primária composta pelas chaves das duas entidades (que também são FK). Atributos do relacionamento entram nessa tabela.</p>` + sch('Livro', ['*isbn', 'titulo']) + sch('Autor', ['*cod', 'nome']) + sch('Autoria', ['*^isbn', '*^cod_autor'], ['isbn referencia Livro', 'cod_autor referencia Autor']) },
-      { t: 'Relacionamentos 1:N', h: `<p>A <b>FK vai para o lado N</b> (a entidade com máximo 1 no relacionamento) e aponta para o lado 1. Atributos do relacionamento também vão para esse lado. Se o mínimo é 0, a FK aceita nulo; se é 1, NOT NULL.</p>` + sch('Escola', ['*cod', 'nome']) + sch('Aluno', ['*matricula', 'nome', '^cod_escola'], ['cod_escola referencia Escola, NOT NULL']) },
+      { t: 'Relacionamentos 1:N', h: `<p>A <b>FK vai para o lado N</b> (a entidade ao lado da qual está o N) e aponta para o lado 1. Atributos do relacionamento também vão para esse lado. Se o mínimo do par ao lado do lado 1 é 0, a FK aceita nulo; se é 1, é NOT NULL.</p>` + sch('Escola', ['*cod', 'nome']) + sch('Aluno', ['*matricula', 'nome', '^cod_escola'], ['cod_escola referencia Escola, NOT NULL']) },
       { t: 'Relacionamentos 1:1', h:
-        T(['Caso', 'Solução'], [['(0,1) × (0,1)', 'Três opções: FK em uma tabela, FK na outra, ou tabela própria. Com poucas associações, a tabela própria evita nulos.'], ['(1,1) × (0,1)', 'FK na tabela da entidade obrigatória (1,1), única e NOT NULL.'], ['(1,1) × (1,1)', 'Fundir as duas entidades em uma só tabela.']]) },
+        T(['Caso', 'Solução'], [['(0,1) × (0,1)', 'Três opções: FK em uma tabela, FK na outra, ou tabela própria. Com poucas associações, a tabela própria evita nulos.'], ['(1,1) × (0,1)', 'A PK da tabela com (1,1) ao lado vira FK, única e NOT NULL, na tabela com (0,1) ao lado (a que sempre tem parceiro).'], ['(1,1) × (1,1)', 'Fundir as duas entidades em uma só tabela.']]) },
       { t: 'Entidade fraca', h: `<p>Chave primária composta: <b>chave da forte + discriminador</b>. A chave da forte é também FK.</p>` + sch('Empregado', ['*matricula', 'nome']) + sch('Dependente', ['*^matricula', '*nome', 'dt_nascimento'], ['matricula referencia Empregado']) },
       { t: 'Auto-relacionamento', h: `<p>1:N: FK na própria tabela. N:N: tabela própria com duas FKs para a mesma tabela.</p>` + sch('Funcionario', ['*matr', 'nome', '^matr_gerente'], ['matr_gerente referencia Funcionario']) + sch('Composicao', ['*^cod_composto', '*^cod_componente'], ['ambas referenciam Produto']) },
       { t: 'Relacionamento ternário e agregação', h:
@@ -175,10 +175,10 @@
         const L = [
           ['Livro', sch('Livro', ['*isbn', 'titulo', 'editora']), 'Entidade vira tabela; ISBN é a chave primária.'],
           ['Autores do livro (atributo multivalorado)', sch('Autor_Livro', ['*^isbn', '*autor'], ['isbn referencia Livro']), 'Multivalorado vira tabela separada com a chave de Livro + o valor.'],
-          ['Exemplar (entidade fraca)', sch('Exemplar', ['*^isbn', '*seq', 'data_aquisicao', '^cod_estante'], ['isbn referencia Livro', 'cod_estante referencia Estante']), 'Fraca: PK composta (ISBN + sequência). A FK para Estante vem do 1:N (Exemplar é o lado N).'],
+          ['Exemplar (entidade fraca)', sch('Exemplar', ['*^isbn', '*seq', 'data_aquisicao', '^cod_estante'], ['isbn referencia Livro', 'cod_estante referencia Estante']), 'Fraca: PK composta (ISBN + sequência). A FK para Estante vem do 1:N (o N fica ao lado de Exemplar, que é o lado N).'],
           ['Estante', sch('Estante', ['*codigo', 'categoria']), 'Entidade comum.'],
           ['Usuário (endereço composto)', sch('Usuario', ['*cpf', 'nome', 'rua', 'numero', 'bairro']), 'Atributo composto vira uma coluna por parte.'],
-          ['Empréstimo (1:N com Usuário)', sch('Emprestimo', ['*id', 'data', '^cpf_usuario'], ['cpf_usuario referencia Usuario, NOT NULL']), 'A FK vai para o lado N (Empréstimo), obrigatória por causa do (1,1).'],
+          ['Empréstimo (1:N com Usuário)', sch('Emprestimo', ['*id', 'data', '^cpf_usuario'], ['cpf_usuario referencia Usuario, NOT NULL']), 'A FK vai para o lado N (Empréstimo, ao lado do qual está o N), obrigatória porque o par ao lado de Usuário é (1,1).'],
           ['Empréstimo × Exemplar (N:N)', sch('Item_Emprestimo', ['*^id_emprestimo', '*^isbn', '*^seq'], ['id_emprestimo referencia Emprestimo', '(isbn, seq) referencia Exemplar']), 'N:N vira tabela própria; a FK para Exemplar é composta porque a chave de Exemplar é composta.'],
         ];
         el.innerHTML = L.map((x) => qa(x[0], x[1] + `<p style="margin:8px 0 0"><b>Regra:</b> ${x[2]}</p>`)).join('');
@@ -205,7 +205,7 @@
       { t: 'Qual regra de mapeamento se aplica?', d: 'Relacione a construção do E-R com a solução no modelo relacional.', kind: 'classify',
         cfg: { choices: ['Tabela própria', 'FK no lado N', 'Fundir em uma tabela', 'PK composta com a da forte'], items: [
           { t: 'Relacionamento N:N.', a: 0, why: 'Chaves das duas entidades formam a PK.' },
-          { t: 'Escola (1,N) × Aluno (1,1).', a: 1, why: 'A FK fica em Aluno.' },
+          { t: 'Escola (1,1) × Aluno (1,N).', a: 1, why: 'A FK fica em Aluno, o lado N.' },
           { t: 'Relacionamento 1:1 com (1,1) dos dois lados.', a: 2, why: 'Uma não existe sem a outra.' },
           { t: 'Entidade fraca Dependente.', a: 3, why: 'Chave da forte + discriminador.' },
           { t: 'Atributo multivalorado telefone.', a: 0, why: 'Tabela separada com a chave da entidade + o valor.' },
@@ -250,9 +250,9 @@
       { stem: 'No mapeamento do modelo E-R para o relacional, um relacionamento N:N entre Nota Fiscal e Produto, com o atributo quantidade, deve ser transformado em:',
         opts: ['Uma coluna quantidade em Produto.', 'Uma coluna quantidade em NotaFiscal.', 'Uma tabela própria, com as chaves de NotaFiscal e Produto (chave primária composta) e a coluna quantidade.', 'Uma fusão das duas entidades.', 'Duas tabelas sem chave estrangeira.'], c: 2,
         e: '<p>N:N vira tabela própria; as chaves das duas entidades formam a PK (e são FKs); atributos do relacionamento vão para ela.</p>', w: ['A quantidade depende do par nota-produto, então não cabe em nenhuma das duas tabelas isoladamente.'] },
-      { stem: 'Em um relacionamento 1:N entre Escola (1,N) e Aluno (1,1), onde deve ficar a chave estrangeira no modelo relacional?',
+      { stem: 'Em um relacionamento 1:N em que cada aluno estuda em exatamente uma escola (par (1,1) ao lado de Escola) e cada escola tem ao menos um aluno (par (1,N) ao lado de Aluno), onde deve ficar a chave estrangeira no modelo relacional?',
         opts: ['Na tabela Escola, apontando para Aluno.', 'Na tabela Aluno, apontando para Escola, e não nula.', 'Em uma terceira tabela obrigatória.', 'Nas duas tabelas.', 'Em nenhuma; o relacionamento não é representado.'], c: 1,
-        e: '<p>A FK vai para o lado N (Aluno) e, como a participação é (1,1), é obrigatória (NOT NULL).</p>', w: ['Na Escola seria preciso vários valores em uma coluna; a terceira tabela é desnecessária em 1:N.'] },
+        e: '<p>A FK vai para o lado N (Aluno, ao lado do qual está o (1,N)) e, como cada aluno tem exatamente uma escola (o (1,1) ao lado de Escola), é obrigatória (NOT NULL).</p>', w: ['Na Escola seria preciso vários valores em uma coluna; a terceira tabela é desnecessária em 1:N.'] },
       { stem: 'Dependente é uma entidade fraca de Empregado, identificada pelo nome do dependente dentro de cada empregado. Qual deve ser a chave primária da tabela Dependente?',
         opts: ['Somente o nome.', 'Somente a matrícula do empregado.', 'A matrícula do empregado combinada com o nome do dependente.', 'A data de nascimento.', 'Nenhuma; entidade fraca não tem chave.'], c: 2,
         e: '<p>Chave da entidade forte + discriminador. A matrícula também é FK para Empregado.</p>', w: ['Só o nome se repetiria entre empregados; só a matrícula não distinguiria dois dependentes do mesmo empregado.'] },

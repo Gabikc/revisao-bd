@@ -12,8 +12,8 @@
   ], edges: [
     ['livro', 'isbn'], ['livro', 'titulo'], ['livro', 'edit'], ['livro', 'autores'], ['exemplar', 'seq'], ['exemplar', 'dtaq'], ['estante', 'cod'], ['estante', 'cat'],
     ['usuario', 'cpf'], ['usuario', 'nome'], ['usuario', 'end'], ['end', 'rua'], ['end', 'num'], ['end', 'bai'], ['emprest', 'data'],
-    ['livro', 'possui', '(1,N)'], ['possui', 'exemplar', '', '(1,1)'], ['exemplar', 'guarda', '(1,1)'], ['guarda', 'estante', '', '(0,N)'],
-    ['usuario', 'realiza', '(0,N)'], ['realiza', 'emprest', '', '(1,1)'], ['emprest', 'envolve', '(1,N)'], ['envolve', 'exemplar', '', '(0,N)'],
+    ['livro', 'possui', '(1,1)'], ['possui', 'exemplar', '', '(1,N)'], ['exemplar', 'guarda', '(0,N)'], ['guarda', 'estante', '', '(1,1)'],
+    ['usuario', 'realiza', '(1,1)'], ['realiza', 'emprest', '', '(0,N)'], ['emprest', 'envolve', '(0,N)'], ['envolve', 'exemplar', '', '(1,N)'],
   ] });
   const ENUN = 'Uma biblioteca deseja criar um banco de dados para automatizar seus processos. Para cada <mark class="e">livro</mark> será armazenado o seu <mark class="a">título</mark>, a <mark class="a">editora</mark> que o publicou, o seu número de <mark class="a">ISBN</mark> e os seus <mark class="a">autores</mark>. <mark class="c">Cada livro tem um valor diferente para o ISBN.</mark> Os livros <mark class="r">possuem</mark> <mark class="e">exemplares</mark>, que possuem uma <mark class="a">sequência de identificação</mark> e a <mark class="a">data de aquisição</mark>. Cada <mark class="e">usuário</mark> da biblioteca é descrito por um <mark class="a">nome</mark>, <mark class="a">cpf</mark> e <mark class="a">endereço</mark>. <mark class="c">O endereço é composto por rua, número e bairro.</mark> Cada <mark class="e">empréstimo</mark> realizado na biblioteca <mark class="r">é feito por um usuário</mark> e <mark class="r">pode envolver um ou mais exemplares</mark>. Para cada empréstimo é guardada a <mark class="a">data</mark> em que foi realizado o empréstimo. Os exemplares <mark class="r">são alocados em</mark> <mark class="e">estantes</mark>. Cada estante é identificada por um <mark class="a">código</mark> e pela <mark class="a">categoria</mark> dos livros que são armazenados na estante.';
   const LEG = '<div class="legend"><mark class="e">entidade</mark><mark class="a">atributo</mark><mark class="r">relacionamento</mark><mark class="c">pista de identificador ou tipo de atributo</mark></div>';
@@ -35,11 +35,11 @@
       { t: 'Passo 3: ligue as entidades com relacionamentos', h:
         T(['Trecho do texto', 'Relacionamento'], [['“Os livros possuem exemplares”', 'Livro possui Exemplar'], ['“Os exemplares são alocados em estantes”', 'Exemplar alocado em Estante'], ['“empréstimo … é feito por um usuário”', 'Usuário realiza Empréstimo'], ['“pode envolver um ou mais exemplares”', 'Empréstimo envolve Exemplar']]) },
       { t: 'Passo 4: marque as cardinalidades', h:
-        T(['Relacionamento', 'Lado 1', 'Lado 2', 'Justificativa'], [
-          ['Livro possui Exemplar', 'Livro (1,N)', 'Exemplar (1,1)', 'Um livro tem exemplares; cada exemplar é de um só livro.'],
-          ['Exemplar alocado em Estante', 'Exemplar (1,1)', 'Estante (0,N)', 'Cada exemplar fica em uma estante; uma estante pode estar vazia ou ter vários.'],
-          ['Usuário realiza Empréstimo', 'Usuário (0,N)', 'Empréstimo (1,1)', 'Empréstimo é feito por exatamente um usuário; usuário pode não ter feito nenhum.'],
-          ['Empréstimo envolve Exemplar', 'Empréstimo (1,N)', 'Exemplar (0,N)', 'Um empréstimo envolve um ou mais exemplares; um exemplar pode ser emprestado várias vezes ao longo do tempo. É N:N.'],
+        T(['Relacionamento', 'Par ao lado da 1ª entidade', 'Par ao lado da 2ª entidade', 'Justificativa'], [
+          ['Livro possui Exemplar', 'Livro (1,1)', 'Exemplar (1,N)', 'Cada exemplar é de um só livro (1,1 ao lado de Livro); um livro tem ao menos um exemplar, podendo ter vários (1,N ao lado de Exemplar).'],
+          ['Exemplar alocado em Estante', 'Exemplar (0,N)', 'Estante (1,1)', 'Cada exemplar fica em uma só estante (1,1 ao lado de Estante); uma estante pode estar vazia ou ter vários exemplares (0,N ao lado de Exemplar).'],
+          ['Usuário realiza Empréstimo', 'Usuário (1,1)', 'Empréstimo (0,N)', 'Cada empréstimo é feito por exatamente um usuário (1,1 ao lado de Usuário); um usuário pode não ter feito nenhum ou ter feito vários (0,N ao lado de Empréstimo).'],
+          ['Empréstimo envolve Exemplar', 'Empréstimo (0,N)', 'Exemplar (1,N)', 'Um empréstimo envolve um ou mais exemplares (1,N ao lado de Exemplar); um exemplar pode ser emprestado várias vezes ao longo do tempo, ou nunca (0,N ao lado de Empréstimo). É N:N.'],
         ]) },
       { t: 'Passo 5: refine (fraca, composto, multivalorado)', h:
         boxes([['Exemplar é entidade fraca', 'Tem apenas uma sequência de identificação, que só faz sentido dentro de um livro. Chave = ISBN + sequência.'], ['Endereço é composto', 'Rua, número e bairro.'], ['Autores é multivalorado', 'Um livro pode ter vários autores. (Alternativa: criar a entidade Autor com relacionamento N:N.)']], 'grid3') },
@@ -52,19 +52,19 @@
           { t: 'Entidades', d: 'Substantivos sobre os quais se guarda informação: Livro, Exemplar, Usuário, Empréstimo e Estante.' },
           { t: 'Atributos', d: 'Características de cada entidade. ISBN, código e cpf são identificadores (sublinhados).' },
           { t: 'Relacionamentos', d: 'Os verbos do texto ligam as entidades: possui, alocado em, realiza, envolve.' },
-          { t: 'Cardinalidades', d: 'Leia cada par (mín,máx) ao lado da entidade. Empréstimo × Exemplar é N:N.' },
+          { t: 'Cardinalidades', d: 'O par ao lado de uma entidade diz com quantas ocorrências dela cada ocorrência da outra se relaciona. Empréstimo × Exemplar é N:N.' },
           { t: 'Refinamentos', d: 'Exemplar vira entidade fraca (borda dupla, sequência como discriminador), autores é multivalorado e endereço ganha suas partes.' },
         ], render: (s) => bib(s) });
       } },
     ],
     activities: [
       { t: 'Confira o seu DER', d: 'Depois de modelar no brModelo (ou no papel), marque o que o seu diagrama já tem.', kind: 'check',
-        cfg: { items: ['Cinco entidades: Livro, Exemplar, Usuário, Empréstimo e Estante.', 'ISBN sublinhado como identificador de Livro.', 'Autores tratado como multivalorado (ou entidade Autor com N:N).', 'Exemplar com sequência e data de aquisição, e identificado em relação ao Livro (entidade fraca).', 'Endereço do Usuário como atributo composto (rua, número, bairro).', 'cpf como identificador de Usuário.', 'Empréstimo com o atributo data.', 'Empréstimo × Exemplar como N:N (um empréstimo envolve um ou mais exemplares).', 'Cada empréstimo ligado a exatamente um usuário: Empréstimo (1,1).', 'Estante com código (identificador) e categoria.', 'Exemplar alocado em uma estante: Exemplar (1,1) e Estante (0,N).', 'Todas as cardinalidades preenchidas com (mín,máx).'] } },
+        cfg: { items: ['Cinco entidades: Livro, Exemplar, Usuário, Empréstimo e Estante.', 'ISBN sublinhado como identificador de Livro.', 'Autores tratado como multivalorado (ou entidade Autor com N:N).', 'Exemplar com sequência e data de aquisição, e identificado em relação ao Livro (entidade fraca).', 'Endereço do Usuário como atributo composto (rua, número, bairro).', 'cpf como identificador de Usuário.', 'Empréstimo com o atributo data.', 'Empréstimo × Exemplar como N:N (um empréstimo envolve um ou mais exemplares).', 'Cada empréstimo ligado a exatamente um usuário: (1,1) ao lado de Usuário.', 'Estante com código (identificador) e categoria.', 'Exemplar alocado em uma estante: (1,1) ao lado de Estante e (0,N) ao lado de Exemplar.', 'Todas as cardinalidades preenchidas com (mín,máx).'] } },
       { t: 'Perguntas sobre o enunciado', d: 'Extraia informações do texto e depois compare.', kind: 'qa', items: [
         ['Por que “Biblioteca” não é uma entidade?', '<p>É o mini-mundo: o contexto do banco. O sistema não precisa guardar dados “da biblioteca” (há uma só), e sim dos livros, usuários, empréstimos etc.</p>'],
         ['O que a frase “Cada livro tem um valor diferente para o ISBN” me diz?', '<p>Que o ISBN é único por livro e, portanto, serve como atributo identificador.</p>'],
-        ['Um exemplar pode existir sem livro? Como isso se reflete no modelo?', '<p>Não: o exemplar só é identificado dentro de um livro. Por isso é entidade fraca de Livro, com participação (1,1) no relacionamento.</p>'],
-        ['Um exemplar pode aparecer em mais de um empréstimo?', '<p>Sim, ao longo do tempo. Por isso Empréstimo × Exemplar é N:N, com Exemplar (0,N): pode nunca ter sido emprestado.</p>'],
+        ['Um exemplar pode existir sem livro? Como isso se reflete no modelo?', '<p>Não: o exemplar só é identificado dentro de um livro. Por isso é entidade fraca de Livro: cada exemplar tem exatamente um livro, o (1,1) ao lado de Livro.</p>'],
+        ['Um exemplar pode aparecer em mais de um empréstimo?', '<p>Sim, ao longo do tempo. Por isso Empréstimo × Exemplar é N:N, com (0,N) ao lado de Empréstimo: um exemplar pode nunca ter sido emprestado.</p>'],
         ['Onde fica a data do empréstimo?', '<p>Como Empréstimo é uma entidade, a data é atributo dela. Só seria atributo do relacionamento se Empréstimo fosse modelado apenas como a associação Usuário-Exemplar.</p>'],
       ] },
     ],
@@ -81,9 +81,9 @@
       { stem: 'No enunciado, “cada livro tem um valor diferente para o ISBN”. Que informação de modelagem essa frase fornece?',
         opts: ['ISBN é atributo multivalorado.', 'ISBN é atributo derivado.', 'ISBN pode ser usado como atributo identificador de Livro.', 'Livro é entidade fraca.', 'ISBN pertence ao relacionamento entre Livro e Exemplar.'], c: 2,
         e: '<p>Valores distintos para cada ocorrência caracterizam um identificador (chave).</p>', w: ['Nenhuma das outras interpretações decorre da frase.'] },
-      { stem: 'Sobre o relacionamento entre Usuário e Empréstimo: cada empréstimo é feito por exatamente um usuário, e um usuário pode nunca ter feito empréstimo ou ter feito vários. Quais são as cardinalidades de Usuário e Empréstimo, respectivamente?',
-        opts: ['(1,1) e (0,N)', '(0,N) e (1,1)', '(1,N) e (1,N)', '(0,1) e (0,N)', '(1,1) e (1,1)'], c: 1,
-        e: '<p>Usuário: mínimo 0 e máximo N → (0,N). Empréstimo: exatamente um usuário → (1,1).</p>', w: ['A inverte os lados; as demais alteram mínimos ou máximos contrariando o texto.'] },
+      { stem: 'Sobre o relacionamento entre Usuário e Empréstimo: cada empréstimo é feito por exatamente um usuário, e um usuário pode nunca ter feito empréstimo ou ter feito vários. Quais pares de cardinalidade ficam desenhados ao lado de Usuário e ao lado de Empréstimo, respectivamente?',
+        opts: ['(1,1) e (0,N)', '(0,N) e (1,1)', '(1,N) e (1,N)', '(0,1) e (0,N)', '(1,1) e (1,1)'], c: 0,
+        e: '<p>O par ao lado de Usuário diz quantos usuários fazem cada empréstimo: exatamente um → (1,1). O par ao lado de Empréstimo diz quantos empréstimos cada usuário fez: nenhum ou vários → (0,N).</p>', w: ['B inverte os lados: colocaria o (0,N) ao lado de Usuário.', 'As demais alteram mínimos ou máximos, contrariando o texto.'] },
       { stem: 'Um livro pode ter vários autores. Qual das opções representa adequadamente essa informação no modelo conceitual?',
         opts: ['Atributo autores como multivalorado em Livro, ou entidade Autor ligada a Livro por N:N.', 'Atributo autor simples em Livro, repetindo o livro para cada autor.', 'Atributo derivado em Livro.', 'Generalização total de Livro em Autor.', 'Nenhuma forma; só é possível um autor por livro.'], c: 0,
         e: '<p>Multivalorado resolve quando basta guardar o nome. Se for preciso guardar dados dos autores, vira entidade com N:N.</p>', w: ['B provoca redundância; C, D e E não fazem sentido para o caso.'] },

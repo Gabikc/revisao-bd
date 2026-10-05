@@ -22,13 +22,13 @@
   const dFraca = er({ w: 600, h: 180, alt: 'Entidade fraca Dependente', nodes: [
     { id: 'E', t: 'e', l: 'Empregado', x: 110, y: 66 }, { id: 'R', t: 'r', l: 'possui', x: 300, y: 66 }, { id: 'D', t: 'w', l: 'Dependente', x: 490, y: 66 },
     { id: 'a', t: 'a', l: 'matrícula', k: 1, x: 110, y: 145 }, { id: 'b', t: 'a', l: 'nome', p: 1, x: 490, y: 145 },
-  ], edges: [['E', 'R', '(0,N)'], ['R', 'D', '', '(1,1)'], ['E', 'a'], ['D', 'b']] });
+  ], edges: [['E', 'R', '(1,1)'], ['R', 'D', '', '(0,N)'], ['E', 'a'], ['D', 'b']] });
   const dAgg = er({ w: 600, h: 330, alt: 'Agregação: Consulta emite Receita', nodes: [
     { id: 'BOX', t: 'box', l: 'Consulta (agregação)', x: 300, y: 78, w: 570, h: 112 },
     { id: 'M', t: 'e', l: 'Médico', x: 110, y: 90 }, { id: 'C', t: 'r', l: 'Consulta', x: 300, y: 90 }, { id: 'P', t: 'e', l: 'Paciente', x: 490, y: 90 },
     { id: 'E', t: 'r', l: 'Emite', x: 300, y: 215 }, { id: 'RC', t: 'e', l: 'Receita', x: 300, y: 295 },
-  ], edges: [['M', 'C', '(0,N)'], ['C', 'P', '', '(0,N)'], ['E', 'BOX', '', '(0,N)'], ['RC', 'E', '(1,1)']] });
-  const dCor1 = bin('Carro', 'Cor', 'possui', '(1,1)', '(0,N)');
+  ], edges: [['M', 'C', '(1,N)'], ['C', 'P', '', '(0,N)'], ['E', 'BOX', '', '(1,1)'], ['RC', 'E', '(0,N)']] });
+  const dCor1 = bin('Carro', 'Cor', 'possui', '(0,N)', '(1,1)');
   const dCor2 = er({ w: 600, h: 120, alt: 'Carro com atributo cor', nodes: [{ id: 'C', t: 'e', l: 'Carro', x: 300, y: 80 }, { id: 'a', t: 'a', l: 'cor', x: 300, y: 25 }], edges: [['C', 'a']] });
   const dImov1 = er({ w: 600, h: 130, alt: 'Imóvel com atributo tipo', nodes: [{ id: 'I', t: 'e', l: 'Imóvel', x: 300, y: 90 }, { id: 'a', t: 'a', l: 'tipo', x: 300, y: 30 }], edges: [['I', 'a']] });
   const dImov2 = dGen('t', 'Imóvel', 'Casa', 'Apartamento', [{ id: 'x', t: 'a', l: 'tamanho_lote', x: 170, y: 240, of: 'A' }, { id: 'y', t: 'a', l: 'prédio', x: 430, y: 240, of: 'B' }]);
@@ -46,7 +46,7 @@
       { t: 'O modelo entidade-relacionamento (Peter Chen, 1976)', h:
         `<p>Proposto por Peter Chen em 1976 (<i>The Entity Relationship Model: Towards the Unified View of Data</i>), é o modelo mais pesquisado e usado em bases de dados. Baseia-se na teoria relacional (Codd, 1970), é simples e de fácil compreensão e foi feito para facilitar o projeto de BD, com a representação lógica da estrutura de forma simplificada. O resultado gráfico é o <b>DER</b> (diagrama entidade-relacionamento).</p>` +
         `<p>No modelo E-R, os dados são descritos como <b>entidades, atributos e relacionamentos</b>.</p>` +
-        bin('Cliente', 'Pedido', 'realiza', '(0,N)', '(1,1)', { aA: ['*cpf', 'nome'], aB: ['*número', 'data'] }) +
+        bin('Cliente', 'Pedido', 'realiza', '(1,1)', '(0,N)', { aA: ['*cpf', 'nome'], aB: ['*número', 'data'] }) +
         boxes([['Retângulo', 'Entidade'], ['Losango', 'Relacionamento'], ['Elipse', 'Atributo (sublinhado se é identificador)']], 'grid3') },
       { g: 'Entidades e atributos', t: 'Entidade e instância', h:
         `<p><b>Entidade</b> é qualquer coisa do mundo real sobre a qual queremos guardar informações. Pode ser concreta (cliente, livro) ou abstrata (empréstimo, conta) e possui uma identificação única.</p><p><b>Instância</b> é uma ocorrência da entidade. No BD relacional, a entidade é uma tabela e cada linha é uma instância.</p>` +
@@ -64,7 +64,7 @@
       { t: 'Cardinalidade máxima: 1:1, 1:N e N:N', h:
         `<p>Dado o relacionamento R entre A e B: com quantos elementos de B se relaciona cada elemento de A, e vice-versa? A cardinalidade é o número de ocorrências de uma entidade que podem estar associadas a uma ocorrência da outra.</p>` +
         `<h4>1:1</h4><p>Um funcionário só gerencia um departamento; um departamento só é gerenciado por um funcionário.</p>` + bin('Funcionário', 'Departamento', 'gerencia', '(1,1)', '(1,1)') +
-        `<h4>1:N</h4><p>Uma empresa possui uma ou mais filiais; cada filial é de apenas uma empresa.</p>` + bin('Empresa', 'Filial', 'possui', '(1,N)', '(1,1)') +
+        `<h4>1:N</h4><p>Uma empresa possui uma ou mais filiais; cada filial é de apenas uma empresa.</p>` + bin('Empresa', 'Filial', 'possui', '(1,1)', '(1,N)') +
         `<h4>N:N</h4><p>Uma nota fiscal tem um ou mais produtos; um produto está em uma ou mais notas fiscais.</p>` + bin('Nota fiscal', 'Produto', 'contém', '(1,N)', '(1,N)') +
         T(['NOTA FISCAL', 'Produtos'], [['001', 'caderno, lapiseira'], ['002', 'lapiseira'], ['003', 'lapiseira, marca-texto']], { cap: 'Exemplo N:N' }) },
       { t: 'Relacionamento N:N com atributo', h:
@@ -73,14 +73,14 @@
         T(['Atributo', 'Pertence a', 'Dono'], [['nome, cpf, endereço, telefone', 'entidade', 'Cliente'], ['título, duração, diretor', 'entidade', 'DVD'], ['data_locação, data_devolução', 'relacionamento', 'loca']], { hl: [2] }) +
         note('Outro exemplo: aluno participa de curso. Atributos de “participa”: data de inscrição, quantidade de faltas e média final.') },
       { t: 'Cardinalidade mínima: opcional x obrigatória', h:
-        `<p>A cardinalidade <b>máxima</b> indica quantas ocorrências (1 ou N) podem se associar. A <b>mínima</b> diz se a participação é obrigatória (1) ou opcional (0). Pares possíveis: (0,1), (1,1), (0,N) e (1,N). O par fica <b>ao lado da entidade</b> e descreve a participação dela.</p>` +
-        `<h4>Opcionalidade</h4><p>Um livro é escrito por pelo menos uma pessoa, podendo ser por várias. Uma pessoa escreve nenhum livro ou vários.</p>` + bin('Pessoa', 'Livro', 'autoria', '(0,N)', '(1,N)') +
-        `<h4>Obrigatoriedade</h4><p>Um aluno deve estudar em apenas uma escola. Uma escola deve ter ao menos um aluno.</p>` + bin('Escola', 'Aluno', 'estuda', '(1,N)', '(1,1)') +
-        tip('Leia o par ao lado de uma entidade como “cada ocorrência desta entidade participa de tantas associações”. Em (1,1) ao lado de Aluno: cada aluno estuda em exatamente 1 escola.') },
+        `<p>A cardinalidade <b>máxima</b> indica quantas ocorrências (1 ou N) podem se associar. A <b>mínima</b> diz se a participação é obrigatória (1) ou opcional (0). Pares possíveis: (0,1), (1,1), (0,N) e (1,N). O par fica <b>ao lado de uma entidade</b> e diz com quantas ocorrências <i>dela</i> cada ocorrência da outra entidade se relaciona.</p>` +
+        `<h4>Opcionalidade</h4><p>Um livro é escrito por pelo menos uma pessoa, podendo ser por várias. Uma pessoa escreve nenhum livro ou vários.</p>` + bin('Pessoa', 'Livro', 'autoria', '(1,N)', '(0,N)') +
+        `<h4>Obrigatoriedade</h4><p>Um aluno deve estudar em apenas uma escola. Uma escola deve ter ao menos um aluno.</p>` + bin('Escola', 'Aluno', 'estuda', '(1,1)', '(1,N)') +
+        tip('Leia o par ao lado de uma entidade perguntando “cada ocorrência da outra entidade se liga a quantas ocorrências desta?”. O (1,1) ao lado de Escola diz que cada aluno estuda em exatamente 1 escola; o (1,N) ao lado de Aluno diz que cada escola tem ao menos 1 aluno.') },
       { g: 'Relacionamentos especiais', t: 'Auto-relacionamento', h:
         `<p>Os participantes do relacionamento são da <b>mesma entidade</b> (relacionamento recursivo). É preciso reconhecer os <b>papéis</b> diferentes que as ocorrências assumem.</p>` +
-        dAuto('', '', '(0,N)', '(1,1)', 'gerente', 'gerenciado') +
-        `<p>Um funcionário gerencia 0 ou vários funcionários (papel gerente); cada funcionário é gerenciado por 1 e apenas 1 funcionário (papel gerenciado).</p>` +
+        dAuto('', '', '(1,1)', '(0,N)', 'é gerente', 'são gerenciados') +
+        `<p>Um funcionário gerencia 0 ou vários funcionários (papel gerente); cada funcionário é gerenciado por 1 e apenas 1 funcionário (papel gerenciado). Em cada linha de papel, o par diz quantas ocorrências daquele papel se ligam a uma ocorrência do outro: o (1,1) em “é gerente” indica que cada funcionário tem exatamente 1 gerente.</p>` +
         dAuto('', '', '(0,N)', '(0,N)', 'componente', 'composto', 'compõe') +
         `<p>Outro exemplo: em uma indústria, um produto é composto de vários outros produtos (componentes); um componente pode participar da composição de muitos produtos.</p>` },
       { t: 'Relacionamento ternário', h:
@@ -124,18 +124,16 @@
       } },
       { t: 'Leitor de cardinalidade', d: 'Escolha o par (mínimo, máximo) de cada lado e veja a frase que ele significa.', mount(el) {
         const P = [['Aluno', 'Alunos', 'Escola', 'Escolas', 'estuda em', 'tem'], ['Pessoa', 'Pessoas', 'Livro', 'Livros', 'escreve', 'é escrito por'], ['Funcionário', 'Funcionários', 'Departamento', 'Departamentos', 'trabalha em', 'tem'], ['Empresa', 'Empresas', 'Filial', 'Filiais', 'possui', 'pertence a']];
-        const sel = (id, v) => `<select id="${id}"><option value="0">0</option><option value="1" ${v === 1 ? 'selected' : ''}>1</option></select> , <select id="${id}x"><option value="1">1</option><option value="N" ${v === 'N' ? 'selected' : ''}>N</option></select>`;
+        const sel = (id, mn, mx) => `<select id="${id}"><option value="0" ${mn === '0' ? 'selected' : ''}>0</option><option value="1" ${mn === '1' ? 'selected' : ''}>1</option></select> , <select id="${id}x"><option value="1" ${mx === '1' ? 'selected' : ''}>1</option><option value="N" ${mx === 'N' ? 'selected' : ''}>N</option></select>`;
         el.innerHTML = `<div class="ctrl"><label>Situação: <select id="pr">${P.map((p, i) => `<option value="${i}">${p[0]} e ${p[2]}</option>`).join('')}</select></label></div>
-          <div class="grid2"><div class="box"><b class="h" id="ha"></b><div class="ctrl">( ${sel('mA', 1)} )</div></div><div class="box"><b class="h" id="hb"></b><div class="ctrl">( ${sel('mB', 0)} )</div></div></div><div class="rel-out" id="out"></div><div id="dg"></div>`;
-        const noun = (s, p, min, max) => (max === '1' ? s : p);
-        const phr = (min, max) => (max === '1' ? (min === '0' ? '0 ou 1' : 'exatamente 1') : (min === '0' ? 'nenhum(a) ou vários(as)' : 'pelo menos 1, podendo ser vários(as)'));
-        const upd = () => {
+          <div class="grid2"><div class="box"><b class="h" id="ha"></b><div class="ctrl">( ${sel('mA', '1', 'N')} )</div></div><div class="box"><b class="h" id="hb"></b><div class="ctrl">( ${sel('mB', '1', '1')} )</div></div></div><div class="rel-out" id="out"></div><div id="dg"></div>`;
+        const ph = (mn, mx, sg, pl) => (mx === '1' ? (mn === '0' ? `0 ou 1 ${sg}` : `exatamente 1 ${sg}`) : (mn === '0' ? `0 ou mais ${pl}` : `1 ou mais ${pl}`));
+                const upd = () => {
           const p = P[+$('#pr', el).value], a0 = $('#mA', el).value, a1 = $('#mAx', el).value, b0 = $('#mB', el).value, b1 = $('#mBx', el).value;
-          $('#ha', el).textContent = `Lado de ${p[0]}`; $('#hb', el).textContent = `Lado de ${p[2]}`;
-          const oneA = b1 === 'N'; // entidade cujo par tem N enxerga vários parceiros
+          $('#ha', el).textContent = `Par ao lado de ${p[0]}`; $('#hb', el).textContent = `Par ao lado de ${p[2]}`;
           const tipo = a1 === '1' && b1 === '1' ? '1:1' : a1 === 'N' && b1 === 'N' ? 'N:N' : '1:N';
-          const lado1 = tipo === '1:N' ? (a1 === 'N' ? p[0] : p[2]) : null;
-          $('#out', el).innerHTML = `<p>Cada <b>${p[0].toLowerCase()}</b> ${p[4]} <b>${phr(a0, a1)}</b> ${noun(p[2].toLowerCase(), p[3].toLowerCase(), a0, a1)}.</p><p>Cada <b>${p[2].toLowerCase()}</b> ${p[5]} <b>${phr(b0, b1)}</b> ${noun(p[0].toLowerCase(), p[1].toLowerCase(), b0, b1)}.</p><p>Participação de ${p[0]}: <b>${a0 === '1' ? 'obrigatória' : 'opcional'}</b>. Participação de ${p[2]}: <b>${b0 === '1' ? 'obrigatória' : 'opcional'}</b>. Tipo: <b>${tipo}</b>${lado1 ? ` (lado 1: ${lado1})` : ''}.</p>`;
+          const lado1 = tipo === '1:N' ? (a1 === 'N' ? p[2] : p[0]) : null;
+          $('#out', el).innerHTML = `<p>O par ao lado de <b>${p[0]}</b> diz: cada <b>${p[2].toLowerCase()}</b> ${p[5]} <b>${ph(a0, a1, p[0].toLowerCase(), p[1].toLowerCase())}</b>.</p><p>O par ao lado de <b>${p[2]}</b> diz: cada <b>${p[0].toLowerCase()}</b> ${p[4]} <b>${ph(b0, b1, p[2].toLowerCase(), p[3].toLowerCase())}</b>.</p><p>Participação de ${p[0]}: <b>${b0 === '1' ? 'obrigatória' : 'opcional'}</b>. Participação de ${p[2]}: <b>${a0 === '1' ? 'obrigatória' : 'opcional'}</b>. Tipo: <b>${tipo}</b>${lado1 ? ` (lado 1: ${lado1})` : ''}.</p>`;
           $('#dg', el).innerHTML = bin(p[0], p[2], p[4].split(' ')[0], `(${a0},${a1})`, `(${b0},${b1})`);
         };
         $$('select', el).forEach((s) => s.onchange = upd); upd();
@@ -144,8 +142,8 @@
         const C = [
           ['Indústria: produto composto de produtos', 'Em uma indústria, um produto é composto de vários outros produtos (componentes); um produto componente pode participar da composição de muitos produtos.', ['Só existe uma entidade: Produto.', 'O produto se relaciona com ele mesmo: auto-relacionamento, com papéis composto e componente.', 'Um composto tem vários componentes e um componente entra em vários compostos: N:N, ambos (0,N).'], dAuto('', '', '(0,N)', '(0,N)', 'componente', 'composto', 'compõe')],
           ['Banco: cliente, conta e agência', 'Um cliente pode possuir diversas contas, cada uma localizada em uma agência específica do banco; uma conta pode pertencer a diferentes clientes.', ['Três entidades participam do mesmo fato: cliente + conta + agência.', 'Não dá para quebrar em binários sem perder a informação de qual conta de qual cliente está em qual agência.', 'Cada par cliente-conta fica em exatamente uma agência: (1,1) do lado de Agência.'], dTern2],
-          ['Escola e aluno', 'Um aluno deve obrigatoriamente estudar em apenas uma escola. Uma escola deve ter ao menos um aluno.', ['Aluno: participação obrigatória e única → (1,1).', 'Escola: pelo menos um, podendo ser vários → (1,N).', 'É um relacionamento 1:N com escola do lado 1.'], bin('Escola', 'Aluno', 'estuda', '(1,N)', '(1,1)')],
-          ['Livro e autoria', 'Um livro é escrito por pelo menos uma pessoa, podendo ser por várias. Uma pessoa escreve nenhum livro ou vários.', ['Livro: pelo menos uma pessoa → (1,N).', 'Pessoa: nenhum ou vários livros → (0,N).', 'N:N com participação opcional para Pessoa.'], bin('Pessoa', 'Livro', 'autoria', '(0,N)', '(1,N)')],
+          ['Escola e aluno', 'Um aluno deve obrigatoriamente estudar em apenas uma escola. Uma escola deve ter ao menos um aluno.', ['Cada aluno estuda em exatamente uma escola → (1,1), escrito ao lado de Escola.', 'Cada escola tem pelo menos um aluno, podendo ter vários → (1,N), escrito ao lado de Aluno.', 'É um relacionamento 1:N com Escola do lado 1.'], bin('Escola', 'Aluno', 'estuda', '(1,1)', '(1,N)')],
+          ['Livro e autoria', 'Um livro é escrito por pelo menos uma pessoa, podendo ser por várias. Uma pessoa escreve nenhum livro ou vários.', ['Cada livro tem pelo menos uma pessoa como autora → (1,N), escrito ao lado de Pessoa.', 'Cada pessoa escreve nenhum livro ou vários → (0,N), escrito ao lado de Livro.', 'N:N, com participação opcional para Pessoa.'], bin('Pessoa', 'Livro', 'autoria', '(1,N)', '(0,N)')],
           ['Médico, paciente, consulta e receita', 'Cada consulta pode gerar uma receita.', ['Consulta é uma associação entre Médico e Paciente.', 'Um relacionamento não se liga a outro relacionamento: usa-se agregação.', 'A agregação Consulta se relaciona com a entidade Receita.'], dAgg],
         ];
         el.innerHTML = `<div class="ctrl"><label>Caso: <select id="cs">${C.map((c, i) => `<option value="${i}">${c[0]}</option>`).join('')}</select></label></div><div id="cb"></div>`;
@@ -175,12 +173,12 @@
           { t: 'Média final do aluno no curso', a: 1, why: 'É determinada pela participação do aluno naquele curso.' },
           { t: 'Duração do DVD', a: 0, why: 'Característica do DVD em si.' },
         ] } },
-      { t: 'Qual é a cardinalidade?', d: 'Cada frase descreve a participação de uma entidade. Escolha o par (mínimo, máximo).', kind: 'classify',
+      { t: 'Qual é a cardinalidade?', d: 'Cada frase diz com quantas ocorrências uma entidade se relaciona. Escolha o par (mínimo, máximo) e note ao lado de qual entidade ele fica no diagrama.', kind: 'classify',
         cfg: { choices: ['(0,1)', '(1,1)', '(0,N)', '(1,N)'], items: [
-          { t: 'Um aluno deve estudar em apenas uma escola (participação do Aluno).', a: 1, why: 'Obrigatório e único.' },
-          { t: 'Uma escola deve ter ao menos um aluno (participação da Escola).', a: 3, why: 'Obrigatório, podendo ser vários.' },
-          { t: 'Uma pessoa escreve nenhum livro ou vários (participação da Pessoa).', a: 2, why: 'Opcional, podendo ser vários.' },
-          { t: 'Um livro é escrito por pelo menos uma pessoa (participação do Livro).', a: 3, why: 'Obrigatório, podendo ser vários.' },
+          { t: 'Um aluno deve estudar em apenas uma escola (par ao lado de Escola).', a: 1, why: 'Obrigatório e único: cada aluno se liga a exatamente 1 escola.' },
+          { t: 'Uma escola deve ter ao menos um aluno (par ao lado de Aluno).', a: 3, why: 'Obrigatório, podendo ser vários: cada escola se liga a 1 ou mais alunos.' },
+          { t: 'Uma pessoa escreve nenhum livro ou vários (par ao lado de Livro).', a: 2, why: 'Opcional, podendo ser vários.' },
+          { t: 'Um livro é escrito por pelo menos uma pessoa (par ao lado de Pessoa).', a: 3, why: 'Obrigatório, podendo ser várias.' },
           { t: 'Um funcionário gerencia 0 ou vários funcionários (papel gerente).', a: 2, why: 'Opcional, vários.' },
           { t: 'Cada funcionário é gerenciado por 1 e apenas 1 funcionário (papel gerenciado).', a: 1, why: 'Obrigatório e único.' },
         ] } },
@@ -202,10 +200,10 @@
         opts: ['Como atributo simples.', 'Como atributo multivalorado.', 'Como atributo derivado.', 'Como entidade fraca obrigatoriamente.', 'Como generalização total.'], c: 1,
         e: '<p>Quando pode existir um conjunto de valores para o atributo, ele é multivalorado.</p>',
         w: ['Simples e monovalorado teria um só valor.', 'Derivado é calculado de outro atributo.', 'Entidade fraca e generalização tratam de dependência e hierarquia.'] },
-      { stem: 'Considere: “Um livro é escrito por pelo menos uma pessoa, podendo ser escrito por várias. Uma pessoa pode não escrever nenhum livro ou escrever vários.” Quais são, respectivamente, as cardinalidades de Livro e de Pessoa no relacionamento autoria?',
-        opts: ['Livro (1,1) e Pessoa (0,1).', 'Livro (1,N) e Pessoa (0,N).', 'Livro (0,N) e Pessoa (1,N).', 'Livro (1,1) e Pessoa (1,N).', 'Livro (0,1) e Pessoa (0,N).'], c: 1,
-        e: '<p>Livro: mínimo 1 (pelo menos uma pessoa) e máximo N → (1,N). Pessoa: mínimo 0 (nenhum livro) e máximo N → (0,N).</p>',
-        w: ['As demais trocam mínimos ou limitam o máximo a 1, contrariando o enunciado.'] },
+      { stem: 'Considere: “Um livro é escrito por pelo menos uma pessoa, podendo ser escrito por várias. Uma pessoa pode não escrever nenhum livro ou escrever vários.” Quais pares de cardinalidade ficam desenhados ao lado de Livro e ao lado de Pessoa, respectivamente, no relacionamento autoria?',
+        opts: ['Livro (1,1) e Pessoa (0,1).', 'Livro (1,N) e Pessoa (0,N).', 'Livro (0,N) e Pessoa (1,N).', 'Livro (1,1) e Pessoa (1,N).', 'Livro (0,1) e Pessoa (0,N).'], c: 2,
+        e: '<p>O par ao lado de Pessoa diz quantas pessoas escrevem cada livro: pelo menos uma, podendo ser várias → (1,N). O par ao lado de Livro diz quantos livros cada pessoa escreve: nenhum ou vários → (0,N).</p>',
+        w: ['A alternativa B inverte os lados: coloca o (1,N) ao lado de Livro.', 'As demais trocam mínimos ou limitam o máximo a 1, contrariando o enunciado.'] },
       { stem: 'Em um modelo, afirma-se que “nem todo funcionário é motorista ou secretária; pode haver funcionários que não sejam nenhum dos dois”. Essa afirmação descreve qual tipo de generalização/especialização?',
         opts: ['Total.', 'Parcial.', 'Ternária.', 'Recursiva.', 'Associativa.'], c: 1,
         e: '<p>Na especialização parcial, nem toda ocorrência da entidade genérica tem uma ocorrência correspondente em uma especializada.</p>',
