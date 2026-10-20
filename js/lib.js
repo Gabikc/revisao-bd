@@ -1,4 +1,10 @@
 'use strict';
+// animação de consulta SQL: figura com legenda, em cartão claro
+function anim(key, legenda) {
+  return `<figure class="sqlgif"><img src="${GIF[key]}" alt="Animação: ${legenda.replace(/<[^>]+>/g, '')}" loading="lazy">
+    <figcaption>${legenda}</figcaption></figure>`;
+}
+
 const MODULES = [];
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));

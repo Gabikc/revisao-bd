@@ -13,13 +13,15 @@
       { g: 'Junções externas', t: 'Da junção interna à externa', h:
         `<p>A junção comum (<b>INNER JOIN</b>) devolve só as linhas que têm correspondência nas duas tabelas. As tuplas sem par são perdidas.</p>` +
         `<p>A <b>junção externa</b> (OUTER JOIN) funciona de forma semelhante, mas <b>preserva as tuplas que seriam perdidas</b>, criando no resultado tuplas com valores nulos. Pode ser <b>LEFT</b>, <b>RIGHT</b> ou <b>FULL</b>.</p>` +
-        T(['Tipo', 'Preserva'], [['INNER JOIN', 'Só os pares que combinam'], ['LEFT (OUTER) JOIN', 'Todas as linhas da tabela à esquerda'], ['RIGHT (OUTER) JOIN', 'Todas as linhas da tabela à direita'], ['FULL (OUTER) JOIN', 'Todas as linhas das duas tabelas']]) },
+        T(['Tipo', 'Preserva'], [['INNER JOIN', 'Só os pares que combinam'], ['LEFT (OUTER) JOIN', 'Todas as linhas da tabela à esquerda'], ['RIGHT (OUTER) JOIN', 'Todas as linhas da tabela à direita'], ['FULL (OUTER) JOIN', 'Todas as linhas das duas tabelas']]) +
+        anim('sqlInner', '<b>Passo a passo.</b> Cada par que casa gera uma linha. José tem cargo 04, que não existe em cargo, e o cargo Gerente não tem funcionário: os dois ficam de fora.') },
       { t: 'LEFT OUTER JOIN', h:
         `<p>Preserva as tuplas somente da relação nomeada <b>antes</b> (à esquerda) da operação.</p>` +
         `<div class="grid2">${T(['codigo', 'nome'], CARGO, { cap: 'cargo' })}${T(['codigo', 'nome', 'cod_cargo'], FUN, { cap: 'funcionario' })}</div>` +
         sql('-- todos os cargos e os funcionários alocados a eles\nSELECT c.nome, f.nome\nFROM cargo c LEFT JOIN funcionario f\n  ON c.codigo = f.cod_cargo;') +
         T(['cargo', 'nome'], [['Programador', 'João'], ['Programador', 'Pedro'], ['Secretaria', 'Maria'], ['Designer', 'José'], ['Ux Designer', nul(null)]], { cap: 'Resultado', hl: [4] }) +
-        `<p>“Ux Designer” não tem funcionário, mas aparece no resultado com NULL.</p>` },
+        `<p>“Ux Designer” não tem funcionário, mas aparece no resultado com NULL.</p>` +
+        anim('sqlLeft', '<b>Passo a passo.</b> Agora José aparece, com NULL nas colunas do cargo. A tabela da esquerda vem inteira, tenha par ou não — é exatamente a diferença em relação à junção interna.') },
       { t: 'RIGHT OUTER JOIN', h:
         `<p>Preserva as tuplas somente da relação nomeada <b>depois</b> (à direita). É o espelho do LEFT: <code>A LEFT JOIN B</code> equivale a <code>B RIGHT JOIN A</code>.</p>` +
         sql('-- todos os funcionários, mesmo sem cargo\nSELECT c.nome, f.nome\nFROM cargo c RIGHT JOIN funcionario f\n  ON c.codigo = f.cod_cargo;') +

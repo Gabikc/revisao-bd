@@ -34,7 +34,8 @@
     topics: [
       { g: 'Subconsultas', t: 'O que é uma subconsulta', h:
         `<p>Uma <b>subconsulta</b> (ou consulta aninhada) é um comando SELECT incluído em outro SELECT, UPDATE, INSERT ou DELETE, ou dentro de outra subconsulta, tudo no mesmo comando SQL.</p><p>É usada quando valores do banco precisam ser obtidos para então serem usados em uma condição, ou quando se precisa de um conjunto de linhas.</p>` +
-        T(['Tipo', 'Retorna'], [['Escalar', 'Um único valor'], ['Única linha', 'Várias colunas, mas só uma linha'], ['Tabela', 'Uma ou mais colunas e múltiplas linhas']]) },
+        T(['Tipo', 'Retorna'], [['Escalar', 'Um único valor'], ['Única linha', 'Várias colunas, mas só uma linha'], ['Tabela', 'Uma ou mais colunas e múltiplas linhas']]) +
+        anim('sqlSub', '<b>Passo a passo.</b> Primeiro roda a consulta de dentro, que devolve 67. Só depois a de fora usa esse valor no WHERE. É sempre de dentro para fora.') },
       { t: 'Subconsulta escalar e de única linha', h:
         `<p>Quando a subconsulta devolve um único valor, ela pode ser comparada com os operadores comuns (=, &lt;, &gt;…).</p>` +
         sql("SELECT codigo, nome\nFROM aluno\nWHERE codigo = (SELECT codigo\n                FROM aluno\n                WHERE nome LIKE '%Maria');   -- = 001, resulta em Ana Maria") +

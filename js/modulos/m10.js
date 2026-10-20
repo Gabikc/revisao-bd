@@ -22,18 +22,20 @@
         `<p>Altera valores de atributos com base em critérios. <b>Sem WHERE, o UPDATE vale para todas as tuplas da tabela.</b></p>` +
         sql("UPDATE <nomeTabela>\nSET <atributo> = <novoValor>\n[WHERE <condição>];") +
         sql("UPDATE cliente\nSET telefone = '0101010101'\nWHERE cod_cliente = '001';") +
-        `<div class="grid2">${T(['cod_cliente', 'nome', 'telefone'], BASE, { cap: 'Antes' })}${T(['cod_cliente', 'nome', 'telefone'], [['001', 'Pedro', '0101010101'], BASE[1], BASE[2]], { cap: 'Depois', hl: [0] })}</div>` },
+        `<div class="grid2">${T(['cod_cliente', 'nome', 'telefone'], BASE, { cap: 'Antes' })}${T(['cod_cliente', 'nome', 'telefone'], [['001', 'Pedro', '0101010101'], BASE[1], BASE[2]], { cap: 'Depois', hl: [0] })}</div>` +
+        anim('sqlUpdate', '<b>Passo a passo.</b> O WHERE separa a linha do código 001; o SET troca o telefone só nela. As outras duas ficam intactas. Sem o WHERE, os três clientes ficariam com o mesmo número.') },
       { t: 'DELETE', h:
         `<p>Remove tuplas de uma relação. <b>Sem WHERE, todas as tuplas são excluídas</b> (a tabela continua existindo, vazia).</p>` +
         sql("DELETE FROM <nomeTabela>\n[WHERE <condição>];") +
         sql("DELETE FROM cliente\nWHERE nome = 'Maria';") +
-        `<div class="grid2">${T(['cod_cliente', 'nome', 'telefone'], BASE, { cap: 'Antes', hl: [1] })}${T(['cod_cliente', 'nome', 'telefone'], [BASE[0], BASE[2]], { cap: 'Depois' })}</div>` },
+        `<div class="grid2">${T(['cod_cliente', 'nome', 'telefone'], BASE, { cap: 'Antes', hl: [1] })}${T(['cod_cliente', 'nome', 'telefone'], [BASE[0], BASE[2]], { cap: 'Depois' })}</div>` +
+        anim('sqlDelete', '<b>Passo a passo.</b> O WHERE encontra a linha da Maria, ela sai e a tabela se fecha. A estrutura continua existindo — diferente do DROP, que levaria a tabela inteira.') },
       { t: 'Cuidados ao manipular dados', h:
         ul(['<b>WHERE esquecido</b> em UPDATE ou DELETE altera ou apaga a tabela inteira. Escreva o WHERE primeiro, ou teste a condição com um SELECT antes.', 'As restrições do módulo 8 continuam valendo: inserir PK repetida, nulo em NOT NULL ou FK inexistente é recusado.', 'Excluir uma linha que é referenciada por chave estrangeira em outra tabela é recusado pela integridade referencial.']) +
         note('Os três pontos são consequência direta do que o slide diz sobre WHERE e do que foi visto em DDL.', 'Complemento') },
       { g: 'Prática', t: 'Atividades propostas', h:
         ul(['Povoar o banco de dados criado na tarefa anterior: <b>5 linhas</b> em cada tabela, <b>2 updates</b> e <b>2 deletes</b> com condições diferentes.', 'Criar o BD <b>Marinha</b>; os dados a serem inseridos estão disponíveis no Classroom.']) +
-        `<p>O banco da Marinha é o mesmo usado nos exercícios de consulta do módulo 10 (marinheiros, barcos e reservas).</p>` },
+        `<p>O banco da Marinha (marinheiros, barcos e reservas) é a atividade da aula; os dados estão no Classroom. Para treinar consultas, o módulo 10 traz a atividade prática do serviço de streaming, com script de criação próprio.</p>` },
     ],
     examples: [
       { t: 'Simulador de INSERT, UPDATE e DELETE', d: 'Execute comandos na tabela cliente, com e sem WHERE, e observe quantas linhas são afetadas.', mount(el) {

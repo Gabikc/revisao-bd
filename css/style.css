@@ -82,6 +82,13 @@ main{padding:32px 28px 90px;min-width:0}
 .btn.ghost:hover{background:var(--surface2)} .btn:not(.ghost):hover{filter:brightness(1.08)}
 .gifbox{border-radius:7%/9.33%;overflow:hidden;background:#2B2170;line-height:0}
 .gifbox img{width:100%;height:auto;display:block;transform:scale(1.02)}
+
+/* animações de consultas SQL: cartão claro, legível nos dois temas */
+.sqlgif{margin:14px 0 6px;border:1px solid var(--line);border-radius:14px;background:#FDFDFE;padding:10px;line-height:0}
+.sqlgif img{width:100%;height:auto;display:block;border-radius:8px}
+.sqlgif figcaption{line-height:1.5;margin-top:9px;padding:0 2px;font-size:.86rem;color:#6B7280;font-family:var(--bf)}
+.sqlgif figcaption b{color:#4F46E5}
+@media (max-width:640px){ .sqlgif{padding:7px} .sqlgif figcaption{font-size:.8rem} }
 .flash{border:1px solid var(--line);background:var(--surface);border-radius:18px;padding:22px 22px 16px;margin:6px 0 40px}
 .flash h2{font-size:1.1rem;margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .flash h2 .ic{color:var(--acc)}

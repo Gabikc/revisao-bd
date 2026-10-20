@@ -8,7 +8,8 @@
     topics: [
       { g: 'Views', t: 'O que é uma view', h:
         `<p>Uma <b>visão</b> é uma tabela derivada de outra(s) tabela(s), que podem ser tabelas básicas ou outras visões. É uma <b>tabela virtual</b>: não existe fisicamente. As tuplas são realmente armazenadas nas tabelas base.</p>` +
-        `<h4>Vantagens</h4>` + ul(['Restringe o acesso a um conjunto predeterminado de colunas de uma tabela.', 'Esconde dados complexos ou salva consultas complexas (por exemplo, um join de várias tabelas).', 'Simplifica os comandos para o usuário.', 'Apresenta os dados em outra perspectiva e permite renomear colunas.']) },
+        `<h4>Vantagens</h4>` + ul(['Restringe o acesso a um conjunto predeterminado de colunas de uma tabela.', 'Esconde dados complexos ou salva consultas complexas (por exemplo, um join de várias tabelas).', 'Simplifica os comandos para o usuário.', 'Apresenta os dados em outra perspectiva e permite renomear colunas.']) +
+        anim('sqlView', '<b>Passo a passo.</b> A view filtra a tabela real e devolve só o recorte pedido. Ela não guarda dados: a cada SELECT consulta a tabela de novo, por isso mostra sempre o estado atual.') },
       { t: 'Sintaxe e operações com views', h:
         sql("CREATE [OR REPLACE] VIEW <nome> [(lista_colunas)]\nAS <expressão de consulta>\n[WITH [CASCADED | LOCAL] CHECK OPTION];") +
         `<p><b>WITH CHECK OPTION</b> não deixa as operações violarem a condição de filtro (WHERE) da visão: verifica, na inserção pela view, se os valores obedecem às restrições. CASCADED e LOCAL controlam como a condição passa entre views encadeadas.</p>` +
@@ -52,7 +53,8 @@
       { t: 'Ação do trigger: OLD, NEW, BEFORE e AFTER', h:
         ul(['A ação pode referenciar os valores <b>antigos (OLD)</b> e <b>novos (NEW)</b> das tuplas inseridas, deletadas ou atualizadas.', 'Eventos de UPDATE podem ser limitados a um atributo ou conjunto de atributos.', 'A ação só roda se o evento ocorrer e a condição for verdadeira.', '<b>BEFORE</b>: dispara imediatamente antes de o dado ser inserido; <b>AFTER</b>: imediatamente depois.', 'Pode haver vários gatilhos para uma mesma tabela.']) +
         T(['Evento', 'OLD', 'NEW'], [['INSERT', 'não existe', 'valores inseridos'], ['UPDATE', 'valores antes', 'valores depois'], ['DELETE', 'valores excluídos', 'não existe']]) +
-        trap('Restrições de uso: um trigger não pode executar COMMIT, ROLLBACK ou SAVEPOINT; o SELECT só pode ser usado com INTO; e é preciso cuidado com o efeito cascata (um trigger disparando outro).') },
+        trap('Restrições de uso: um trigger não pode executar COMMIT, ROLLBACK ou SAVEPOINT; o SELECT só pode ser usado com INTO; e é preciso cuidado com o efeito cascata (um trigger disparando outro).') +
+        anim('sqlTrigger', '<b>Passo a passo.</b> A nota 9 passa; a nota 12 é barrada <i>antes</i> de ser gravada, porque o trigger é BEFORE. Ele examina o valor que está entrando através de <code>NEW.nota</code>.') },
       { t: 'Sintaxe e exemplos de trigger', h:
         sql("CREATE TRIGGER nome_trigger\n[BEFORE | AFTER] [INSERT | UPDATE | DELETE]\nON nome_tabela\nFOR EACH ROW\n  declarações;\n\nDROP TRIGGER nome_trigger;") +
         `<h4>Data de agendamento futura</h4>` +

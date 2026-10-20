@@ -146,6 +146,18 @@
       { stem: 'Sobre a relação entre as formas normais, assinale a alternativa correta.',
         opts: ['Uma relação em BCNF não precisa estar em 3FN.', 'Uma relação em 1FN está sempre em 2FN.', 'Uma relação em BCNF está obrigatoriamente em 3FN.', 'A 2FN é mais restritiva que a 3FN.', 'A 1FN exige ausência de chaves estrangeiras.'], c: 2,
         e: '<p>As formas se incluem: BCNF ⊂ 3FN ⊂ 2FN ⊂ 1FN. Tudo que está em BCNF está em 3FN.</p>' },
+      { stem: 'Na tabela cliente(cpf, nome, telefone), a coluna telefone guarda valores como “8888-1111, 9999-2222” para um mesmo cliente. Qual forma normal é violada e qual é a correção adequada?',
+        opts: ['2FN; separar nome e telefone em tabelas diferentes.', '3FN; mover o telefone para a tabela de cidades.', '1FN; criar Telefone(cpf, numero), com chave composta e FK para cliente.', 'Nenhuma; valores múltiplos na mesma célula são permitidos.', 'BCNF; tornar o telefone a chave primária de cliente.'], c: 2,
+        e: '<p>A 1FN exige valores atômicos. Mais de um número na mesma célula é um atributo multivalorado: ele vai para uma tabela própria, ligada ao cliente pela chave.</p>',
+        w: ['A: a 2FN trata de dependência parcial de chave composta, não de valores não atômicos.', 'B: a 3FN trata de dependência transitiva; telefone em tabela de cidades não faz sentido.', 'D: a 1FN proíbe exatamente isso: valores únicos e indivisíveis.', 'E: telefone não identifica o cliente, e a BCNF trata de determinantes que não são chave candidata.'] },
+      { stem: 'A tabela matricula_disc(ra, cod_disc, nome_aluno, nota) tem chave primária composta (ra, cod_disc), e o nome do aluno depende apenas do ra. Qual alternativa identifica o problema e a solução?',
+        opts: ['Viola a 2FN: nome_aluno depende só de parte da chave. Criar aluno(ra, nome_aluno) e manter matricula_disc(ra, cod_disc, nota).', 'Viola a 1FN: nome_aluno é um atributo composto.', 'Viola a 3FN: a nota determina o nome do aluno.', 'Está normalizada, pois a chave primária é composta.', 'Viola a 2FN: basta remover cod_disc da chave primária.'], c: 0,
+        e: '<p>nome_aluno depende só de ra, que é parte da chave: dependência parcial, que viola a 2FN. A solução é separar o dado do aluno em outra tabela.</p>',
+        w: ['B: o nome é um valor atômico; o problema não é de 1FN.', 'C: a nota depende da chave inteira e não determina o nome.', 'D: chave composta é justamente a condição para existir dependência parcial.', 'E: sem cod_disc na chave, cada aluno teria uma única matrícula e perderíamos informação.'] },
+      { stem: 'Em funcionario(matricula, nome, cod_depto, nome_depto), a chave primária é matricula e vale cod_depto → nome_depto. Considerando que a tabela já está na 2FN, qual é o problema e como corrigi-lo?',
+        opts: ['Nenhum: está na 3FN, pois a chave primária é simples.', 'Viola a 1FN: nome_depto é multivalorado.', 'Viola a 2FN: nome_depto depende de parte da chave.', 'Viola a 3FN (dependência transitiva): criar departamento(cod_depto, nome_depto) e manter cod_depto como FK.', 'Viola a BCNF e a 1FN: remover a coluna cod_depto.'], c: 3,
+        e: '<p>matricula → cod_depto → nome_depto: nome_depto depende de outro atributo não chave (dependência transitiva), o que viola a 3FN. Separe o departamento e mantenha cod_depto como chave estrangeira.</p>',
+        w: ['A: chave simples elimina a dependência parcial, mas não a transitiva.', 'B: nome_depto guarda um único valor; não há atributo multivalorado.', 'C: com chave de uma coluna não existe “parte” da chave; a 2FN não pode ser violada.', 'E: remover cod_depto perderia o vínculo do funcionário com o departamento.'] },
     ],
   });
 })();
